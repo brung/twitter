@@ -7,6 +7,9 @@
 //
 
 #import "Tweet.h"
+@interface Tweet()
+@property (nonatomic, strong) NSString *tweetId;
+@end
 
 @implementation Tweet
 
@@ -20,6 +23,9 @@
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"EEE MMM d HH:mm:ss Z y";
         self.createdAt = [formatter dateFromString:createdAtString];
+        self.tweetId = dictionary[@"id"];
+        self.retweetCount = [dictionary[@"retweet_count"] integerValue];
+        self.favoriteCount = [dictionary[@"favorite_count"] integerValue];
     }
     
     return self;
