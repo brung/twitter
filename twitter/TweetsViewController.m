@@ -14,11 +14,15 @@
 #import "Tweet.h"
 #import "TweetCell.h"
 
+static NSInteger const ResultCount = 20;
+
 @interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate>
 @property (nonatomic, strong) NSArray *tweets;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) TweetCell *prototypeCell;
+@property (nonatomic) BOOL isUpdating;
+@property (nonatomic) BOOL isPaginating;
 
 @end
 
@@ -34,6 +38,9 @@ NSString * const TweetCellNibName = @"TweetCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.isUpdating = NO;
+    self.isPaginating = NO;
+    
     self.title = @"Home";
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLeftButton)];
     self.navigationItem.leftBarButtonItem = leftButton;
@@ -48,6 +55,13 @@ NSString * const TweetCellNibName = @"TweetCell";
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
+    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 50)];
+    UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [loadingView startAnimating];
+    loadingView.center = tableFooterView.center;
+    [tableFooterView addSubview:loadingView];
+    self.tableView.tableFooterView = tableFooterView;
     
     [self fetchTweets];
 
@@ -64,6 +78,11 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == self.tweets.count-1) {
+        self.isPaginating = YES;
+        [self fetchTweets];
+    }
+    
     TweetCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TweetCellNibName];
     [self configureCell:cell forRowAtIndexPath:indexPath];
     return cell;
@@ -161,15 +180,37 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 - (void)fetchTweets {
-    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
-        [self.refreshControl endRefreshing];
-        if (!error) {
-            self.tweets = tweets;
-            [self.tableView reloadData];
-        } else {
-            NSLog(@"Got an error retrieving tweets: %@", error);
+    if (!self.isUpdating) {
+        self.isUpdating = YES;
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        [params setObject:@(ResultCount) forKey:@"count"];
+        if(self.isPaginating) {
+            Tweet *oldestTweet = self.tweets[self.tweets.count-1];
+            long long oldestId = [oldestTweet.tweetId longLongValue]-1;
+            [params setObject:@(oldestId) forKey:@"max_id"];
         }
-    }];
+        [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
+            [self.refreshControl endRefreshing];
+            if (!error) {
+                if (self.isPaginating) {
+                    NSMutableArray *allTweets = [NSMutableArray arrayWithArray:self.tweets];
+                    [allTweets addObjectsFromArray:tweets];
+                    self.tweets = [allTweets copy];
+                } else {
+                    self.tweets = tweets;
+                }
+                [self.tableView reloadData];
+                self.isUpdating = NO;
+                self.isPaginating = NO;
+            } else {
+                NSLog(@"Got an error retrieving tweets: %@", error);
+                self.isUpdating = NO;
+                self.isPaginating = NO;
+            }
+        }];
+    } else {
+        NSLog(@"Not fetching data as another call is already running");
+    }
 }
 
 - (void)onRefresh {
