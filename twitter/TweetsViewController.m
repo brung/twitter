@@ -16,7 +16,7 @@
 
 static NSInteger const ResultCount = 20;
 
-@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate>
+@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate, TweetDetailViewControllerDelegate>
 @property (nonatomic, strong) NSArray *tweets;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -102,6 +102,7 @@ NSString * const TweetCellNibName = @"TweetCell";
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     TweetDetailViewController *vc = [[TweetDetailViewController alloc] init];
     vc.tweet = self.tweets[indexPath.row];
+    vc.delegate = self;
     //UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -128,15 +129,10 @@ NSString * const TweetCellNibName = @"TweetCell";
         }
         case ButtonIDRetweet:
         {
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            Tweet *origTweet = self.tweets[indexPath.row];
             [cell.tweet retweetWithCompletion:^(Tweet *tweet, NSError *error) {
                 if (!error) {
-                    origTweet.favorited = tweet.favorited;
-                    origTweet.retweeted = tweet.retweeted;
-                    origTweet.favoriteCount = tweet.favoriteCount;
-                    origTweet.retweetCount =  tweet.retweetCount;
-                    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+                    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+                    [self updateTweet:tweet atIndexPath:indexPath];
                     NSLog(@"Successful retweet");
                 } else {
                     NSLog(@"Failed to retweet: %@", error);
@@ -147,15 +143,10 @@ NSString * const TweetCellNibName = @"TweetCell";
         }
         case ButtonIDFavorite:
         {
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            Tweet *origTweet = self.tweets[indexPath.row];
             [cell.tweet favoriteWithCompletion:^(Tweet *tweet, NSError *error) {
                 if (!error) {
-                    origTweet.favorited = tweet.favorited;
-                    origTweet.retweeted = tweet.retweeted;
-                    origTweet.favoriteCount = tweet.favoriteCount;
-                    origTweet.retweetCount =  tweet.retweetCount;
-                    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+                    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+                    [self updateTweet:tweet atIndexPath:indexPath];
                     NSLog(@"Successful edit favorite");
                 } else {
                     NSLog(@"Failed to favorite: %@", error);
@@ -169,6 +160,42 @@ NSString * const TweetCellNibName = @"TweetCell";
             break;
     }
 }
+
+- (void)updateTweet:(Tweet *)tweet atIndexPath:(NSIndexPath *)indexPath {
+    Tweet *origTweet = self.tweets[indexPath.row];
+    origTweet.favorited = tweet.favorited;
+    origTweet.retweeted = tweet.retweeted;
+    origTweet.favoriteCount = tweet.favoriteCount;
+    origTweet.retweetCount =  tweet.retweetCount;
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+#pragma mark - TweetDetailViewControllerDelegate methods
+- (void) tweetDetailViewController:(TweetDetailViewController *)vc favoritedTweet:(Tweet *)tweet {
+    for (int tweetIndex=0; tweetIndex < self.tweets.count; tweetIndex++) {
+        NSString *tweetId = ((Tweet *)self.tweets[tweetIndex]).tweetId;
+        NSString *test = tweet.tweetId;
+        NSLog(@"%@ and %@", tweetId, test);
+        if([test longLongValue] == [tweetId longLongValue]) {
+            NSLog(@"Found match");
+            [self updateTweet:tweet atIndexPath:[NSIndexPath indexPathForRow:tweetIndex inSection:0]];
+            break;
+        }
+    }
+}
+- (void) tweetDetailViewController:(TweetDetailViewController *)vc reTweet:(Tweet *)tweet {
+    for (int tweetIndex=0; tweetIndex < self.tweets.count; tweetIndex++) {
+        NSString *tweetId = ((Tweet *)self.tweets[tweetIndex]).tweetId;
+        NSString *test = tweet.retweetedId;
+        NSLog(@"%@ and %@", tweetId, test);
+        if([test longLongValue] == [tweetId longLongValue]) {
+            NSLog(@"Found match");
+            [self updateTweet:tweet atIndexPath:[NSIndexPath indexPathForRow:tweetIndex inSection:0]];
+            break;
+        }
+    }
+}
+
 
 #pragma mark - Private methods
 - (void)onLeftButton {

@@ -28,6 +28,7 @@
         self.favoriteCount = [dictionary[@"favorite_count"] integerValue];
         self.favorited = [dictionary[@"favorited"] boolValue];
         self.retweeted = [dictionary[@"retweeted"] boolValue];
+        self.retweetedId = [dictionary valueForKeyPath:@"retweeted_status.id"];
     }
     
     return self;

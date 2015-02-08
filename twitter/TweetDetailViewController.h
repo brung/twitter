@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
 
+@class TweetDetailViewController;
+@protocol TweetDetailViewControllerDelegate <NSObject>
+- (void) tweetDetailViewController:(TweetDetailViewController *)vc favoritedTweet:(Tweet *)tweet;
+- (void) tweetDetailViewController:(TweetDetailViewController *)vc reTweet:(Tweet *)tweet;
+
+@end
+
 @interface TweetDetailViewController : UIViewController
 @property (nonatomic, strong) Tweet *tweet;
+@property (nonatomic, strong) id<TweetDetailViewControllerDelegate> delegate;
 @end

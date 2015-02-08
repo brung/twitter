@@ -44,7 +44,7 @@
     [self.favoriteButton setImage:[UIImage imageNamed:@"favoriteIcon_on"] forState:UIControlStateSelected];
     [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon"] forState:UIControlStateNormal];
     [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon_on"] forState:UIControlStateSelected];
-    [self updateScreenContents];
+    [self updateScreenContentsWithTweet:self.tweet];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,7 +52,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) updateScreenContents {
+- (void) updateScreenContentsWithTweet:(Tweet *)tweet {
+    self.tweet.favorited = tweet.favorited;
+    self.tweet.retweeted = tweet.retweeted;
+    self.tweet.favoriteCount = tweet.favoriteCount;
+    self.tweet.retweetCount =  tweet.retweetCount;
     self.retweetCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.retweetCount];
     self.favoriteCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.favoriteCount];
     self.favoriteButton.selected = self.tweet.favorited;
@@ -63,12 +67,9 @@
 - (IBAction)onFavoriteTap:(id)sender {
     [self.tweet favoriteWithCompletion:^(Tweet *tweet, NSError *error) {
         if (!error) {
-            self.tweet.favorited = tweet.favorited;
-            self.tweet.retweeted = tweet.retweeted;
-            self.tweet.favoriteCount = tweet.favoriteCount;
-            self.tweet.retweetCount =  tweet.retweetCount;
-            [self updateScreenContents];
+            [self updateScreenContentsWithTweet:tweet];
             NSLog(@"Successful edit favorite");
+            [self.delegate tweetDetailViewController:self favoritedTweet:tweet];
         } else {
             NSLog(@"Failed to favorite: %@", error);
             //TODO display error message
@@ -79,11 +80,8 @@
 - (IBAction)onRetweetTap:(id)sender {
     [self.tweet retweetWithCompletion:^(Tweet *tweet, NSError *error) {
         if (!error) {
-            self.tweet.favorited = tweet.favorited;
-            self.tweet.retweeted = tweet.retweeted;
-            self.tweet.favoriteCount = tweet.favoriteCount;
-            self.tweet.retweetCount =  tweet.retweetCount;
-            [self updateScreenContents];
+            [self updateScreenContentsWithTweet:tweet];
+            [self.delegate tweetDetailViewController:self reTweet:tweet];
             NSLog(@"Successful retweet");
         } else {
             NSLog(@"Failed to retweet: %@", error);

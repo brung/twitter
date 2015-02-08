@@ -99,6 +99,7 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     [self POST:[NSString stringWithFormat: @"1.1/statuses/retweet/%@.json",tweetId] parameters:[NSDictionary dictionary] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         // No op.  All data passed in parasms
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Retweet %@", responseObject);
         Tweet *returnTweet = [[Tweet alloc] initWithDictionary:responseObject];
         completion(returnTweet, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -122,7 +123,6 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     [self POST:[NSString stringWithFormat:@"1.1/favorites/%@.json",endpoint] parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         // No op.  All data passed in parasms
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"success response %@", responseObject);
         Tweet *returnTweet = [[Tweet alloc] initWithDictionary:responseObject];
         completion(returnTweet, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

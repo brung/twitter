@@ -18,6 +18,7 @@
 @property (nonatomic) NSInteger favoriteCount;
 @property (nonatomic) BOOL favorited;
 @property (nonatomic) BOOL retweeted;
+@property (nonatomic, strong) NSString *retweetedId;
 
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
