@@ -43,9 +43,11 @@ NSString * const TweetCellNibName = @"TweetCell";
     
     self.title = @"Home";
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLeftButton)];
+    leftButton.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftButton;
 
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStylePlain target:self action:@selector(onRightButton)];
+    rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
     
     self.tableView.dataSource = self;

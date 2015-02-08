@@ -123,8 +123,8 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         // No op.  All data passed in parasms
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"success response %@", responseObject);
-        Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
-        completion(tweet, nil);
+        Tweet *returnTweet = [[Tweet alloc] initWithDictionary:responseObject];
+        completion(returnTweet, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         completion(nil, error);
     }];

@@ -44,6 +44,7 @@
     [super layoutSubviews];
     self.profileImage.layer.cornerRadius = 3;
     self.profileImage.clipsToBounds = YES;
+    self.tweetLabel.preferredMaxLayoutWidth = self.tweetLabel.frame.size.width;
 }
 
 - (void)setTweet:(Tweet *)tweet {

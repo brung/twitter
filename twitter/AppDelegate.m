@@ -31,6 +31,16 @@
         NSLog(@"Welcome %@", user.name);
         UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
         self.window.rootViewController = nvc;
+        
+        UINavigationBar *navbar = nvc.navigationBar;
+        [navbar setBarTintColor:[UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1]];
+        navbar.tintColor = [UIColor whiteColor];
+        [navbar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                        [UIColor whiteColor],
+                                        NSForegroundColorAttributeName,
+                                        [UIColor whiteColor],
+                                        NSForegroundColorAttributeName,
+                                        nil]];
     } else {
         NSLog(@"Not logged in");
         self.window.rootViewController = [[LoginViewController alloc] init];

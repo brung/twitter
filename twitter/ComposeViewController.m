@@ -29,10 +29,13 @@
 
     
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onLeftButton)];
+    leftButton.tintColor = [UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1];
     self.navigationItem.leftBarButtonItem = leftButton;
     
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Tweet" style:UIBarButtonItemStylePlain target:self action:@selector(onRightButton)];
+    rightButton.tintColor = [UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1];
     self.textCounter = [[UIBarButtonItem alloc] initWithTitle:@"140" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.textCounter.tintColor = [UIColor lightGrayColor];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightButton, self.textCounter, nil];
     
     self.profileImage.layer.cornerRadius = 3;
