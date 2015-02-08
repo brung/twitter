@@ -14,7 +14,7 @@
 #import "Tweet.h"
 #import "TweetCell.h"
 
-@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate>
 @property (nonatomic, strong) NSArray *tweets;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -73,12 +73,8 @@ NSString * const TweetCellNibName = @"TweetCell";
     [self configureCell:self.prototypeCell forRowAtIndexPath:indexPath];
     [self.prototypeCell layoutIfNeeded];
     CGSize size = [self.prototypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    
     return size.height+1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewAutomaticDimension;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,6 +89,63 @@ NSString * const TweetCellNibName = @"TweetCell";
     if ([cell isKindOfClass:[TweetCell class]]) {
         TweetCell *tweetCell = (TweetCell *)cell;
         tweetCell.tweet = self.tweets[indexPath.row];
+        tweetCell.delegate = self;
+    }
+}
+
+#pragma mark - TweetCellDelegate
+- (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonID {
+    switch(buttonID)
+    {
+        case ButtonIDReply:
+        {
+            ComposeViewController *vc = [[ComposeViewController alloc] init];
+            vc.replyToTweet = cell.tweet;
+            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+            [self.navigationController presentViewController:nvc animated:YES completion:nil];
+            break;
+        }
+        case ButtonIDRetweet:
+        {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            Tweet *origTweet = self.tweets[indexPath.row];
+            [cell.tweet retweetWithCompletion:^(Tweet *tweet, NSError *error) {
+                if (!error) {
+                    origTweet.favorited = tweet.favorited;
+                    origTweet.retweeted = tweet.retweeted;
+                    origTweet.favoriteCount = tweet.favoriteCount;
+                    origTweet.retweetCount =  tweet.retweetCount;
+                    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+                    NSLog(@"Successful retweet");
+                } else {
+                    NSLog(@"Failed to retweet: %@", error);
+                    //TODO display error message
+                }
+            }];
+            break;
+        }
+        case ButtonIDFavorite:
+        {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            Tweet *origTweet = self.tweets[indexPath.row];
+            [cell.tweet favoriteWithCompletion:^(Tweet *tweet, NSError *error) {
+                if (!error) {
+                    origTweet.favorited = tweet.favorited;
+                    origTweet.retweeted = tweet.retweeted;
+                    origTweet.favoriteCount = tweet.favoriteCount;
+                    origTweet.retweetCount =  tweet.retweetCount;
+                    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+                    NSLog(@"Successful edit favorite");
+                } else {
+                    NSLog(@"Failed to favorite: %@", error);
+                    //TODO display error message
+                }
+            }];
+
+            break;
+        }
+        default:
+            break;
     }
 }
 

@@ -16,9 +16,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *screennameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tweetLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *replyImage;
-@property (weak, nonatomic) IBOutlet UIImageView *retweetImage;
-@property (weak, nonatomic) IBOutlet UIImageView *favoriteImage;
+@property (weak, nonatomic) IBOutlet UIButton *replyButton;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 
 @end;
 
@@ -28,6 +28,10 @@
     // Initialization code
     self.profileImage.layer.cornerRadius = 3;
     self.profileImage.clipsToBounds = YES;
+    [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon"] forState:UIControlStateNormal];
+    [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon_on"] forState:UIControlStateSelected];
+    [self.favoriteButton setImage:[UIImage imageNamed:@"favoriteIcon"] forState:UIControlStateNormal];
+    [self.favoriteButton setImage:[UIImage imageNamed:@"favoriteIcon_on"] forState:UIControlStateSelected];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -49,5 +53,20 @@
     self.screennameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screename ];
     self.tweetLabel.text = tweet.text;
     self.timeLabel.text = [tweet.createdAt timeAgo];
+    self.retweetButton.selected = tweet.retweeted;
+    self.favoriteButton.selected = tweet.favorited;
 }
+
+- (IBAction)onReplyTap:(id)sender {
+    [self.delegate tweetCell:self didPressButton:ButtonIDReply];
+}
+
+- (IBAction)onRetweetTap:(id)sender {
+    [self.delegate tweetCell:self didPressButton:ButtonIDRetweet];
+}
+
+- (IBAction)onFavoriteTap:(id)sender {
+    [self.delegate tweetCell:self didPressButton:ButtonIDFavorite];
+}
+
 @end
