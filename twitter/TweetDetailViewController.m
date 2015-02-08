@@ -7,6 +7,7 @@
 //
 
 #import "TweetDetailViewController.h"
+#import "ComposeViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import <NSDate+MinimalTimeAgo.h>
 
@@ -18,10 +19,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *retweetCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *favoriteCountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *replyButon;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+
 
 @end
 
 @implementation TweetDetailViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,14 +40,65 @@
     self.screennameLabel.text = [NSString stringWithFormat:@"@%@", self.tweet.user.screename ];
     self.tweetLabel.text = self.tweet.text;
     self.dateLabel.text = [self.tweet.createdAt timeAgo];
-    self.retweetCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.retweetCount];
-    self.favoriteCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.favoriteCount];
+    [self.favoriteButton setImage:[UIImage imageNamed:@"favoriteIcon"] forState:UIControlStateNormal];
+    [self.favoriteButton setImage:[UIImage imageNamed:@"favoriteIcon_on"] forState:UIControlStateSelected];
+    [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon"] forState:UIControlStateNormal];
+    [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon_on"] forState:UIControlStateSelected];
+    [self updateScreenContents];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void) updateScreenContents {
+    self.retweetCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.retweetCount];
+    self.favoriteCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.favoriteCount];
+    self.favoriteButton.selected = self.tweet.favorited;
+    self.retweetButton.selected = self.tweet.retweeted;
+}
+
+#pragma mark - Buttons
+- (IBAction)onFavoriteTap:(id)sender {
+    [self.tweet favoriteWithCompletion:^(Tweet *tweet, NSError *error) {
+        if (!error) {
+            self.tweet.favorited = tweet.favorited;
+            self.tweet.retweeted = tweet.retweeted;
+            self.tweet.favoriteCount = tweet.favoriteCount;
+            self.tweet.retweetCount =  tweet.retweetCount;
+            [self updateScreenContents];
+            NSLog(@"Successful edit favorite");
+        } else {
+            NSLog(@"Failed to favorite: %@", error);
+            //TODO display error message
+        }
+    }];
+}
+
+- (IBAction)onRetweetTap:(id)sender {
+    [self.tweet retweetWithCompletion:^(Tweet *tweet, NSError *error) {
+        if (!error) {
+            self.tweet.favorited = tweet.favorited;
+            self.tweet.retweeted = tweet.retweeted;
+            self.tweet.favoriteCount = tweet.favoriteCount;
+            self.tweet.retweetCount =  tweet.retweetCount;
+            [self updateScreenContents];
+            NSLog(@"Successful retweet");
+        } else {
+            NSLog(@"Failed to retweet: %@", error);
+            //TODO display error message
+        }
+    }];
+}
+
+- (IBAction)onReplyTap:(id)sender {
+    ComposeViewController *vc = [[ComposeViewController alloc] init];
+    vc.replyToTweet = self.tweet;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.navigationController presentViewController:nvc animated:YES completion:nil];
+}
+
 
 /*
 #pragma mark - Navigation

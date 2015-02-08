@@ -8,6 +8,7 @@
 
 #import "TweetsViewController.h"
 #import "TweetDetailViewController.h"
+#import "ComposeViewController.h"
 #import "TwitterClient.h"
 #import "User.h"
 #import "Tweet.h"
@@ -101,7 +102,9 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 - (void)onRightButton {
-    [User logout];
+    ComposeViewController *vc = [[ComposeViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.navigationController presentViewController:nvc animated:YES completion:nil];
 }
 
 - (void)fetchTweets {

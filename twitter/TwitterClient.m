@@ -7,7 +7,6 @@
 //
 
 #import "TwitterClient.h"
-#import "Tweet.h"
 
 NSString * const kTwitterConsumerKey = @"LJrg3rFF5Dyy55iuX7n3tdAOe";
 NSString * const kTwitterConsumerSecret = @"jCGpEHF2zxoTqgq5NoNo8t11OBUv0tIBhO58dh5rfrn85J5x9B";
@@ -79,7 +78,7 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
-- (void)updateTweetwithParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
+- (void)updateTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
     //https://dev.twitter.com/rest/reference/post/statuses/update
     //REquired : status
     //Optional : in_reply_to_status_id, possibly_sensitvie, lat, long, place_id, display_coordinates, trim_user, media_ids
@@ -93,11 +92,11 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
-- (void)reTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
+- (void)retweetId:(NSString *)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion {
     //https://dev.twitter.com/rest/reference/post/statuses/retweet/%3Aid
     //Required: id
     //Optional: trim_user for only getting author id instead of full user
-    [self POST:@"1.1/statuses/retweet/:id.json" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [self POST:[NSString stringWithFormat: @"1.1/statuses/retweet/%@.json",tweetId] parameters:[NSDictionary dictionary] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         // No op.  All data passed in parasms
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         Tweet *returnTweet = [[Tweet alloc] initWithDictionary:responseObject];
@@ -108,23 +107,34 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
 }
 
 - (void)favoriteTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    [self handleFavorite:YES withParameters:params completion:completion];
+}
+
+- (void)unfavoriteTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    [self handleFavorite:NO withParameters:params completion:completion];
+}
+
+- (void)handleFavorite:(BOOL)favorite withParameters:(NSDictionary *)params completion:(void (^)(Tweet *responseTweet, NSError *error))completion {
+    NSString *endpoint = favorite ? @"create" : @"destroy";
     //https://dev.twitter.com/rest/reference/post/favorites/create
     //Required: id
     //Optional: include_entities
-    [self POST:@"1.1/favorites/create.json" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [self POST:[NSString stringWithFormat:@"1.1/favorites/%@.json",endpoint] parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         // No op.  All data passed in parasms
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        Tweet *returnTweet = [[Tweet alloc] initWithDictionary:responseObject];
-        completion(returnTweet, nil);
+        NSLog(@"success response %@", responseObject);
+        Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+        completion(tweet, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         completion(nil, error);
     }];
 }
 
+
 - (void)replyTweetId:(NSString *)tweetId withParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
     NSMutableDictionary *newParams = [NSMutableDictionary dictionaryWithDictionary:params];
     [newParams setObject:tweetId forKey:@"in_reply_to_status_id"];
-    [self updateTweetwithParams:newParams completion:completion];
+    [self updateTweetWithParameters:newParams completion:completion];
 }
 
 

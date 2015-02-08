@@ -7,13 +7,13 @@
 //
 
 #import "Tweet.h"
+#import "TwitterClient.h"
 @interface Tweet()
-@property (nonatomic, strong) NSString *tweetId;
 @end
 
 @implementation Tweet
 
--(id)initWithDictionary:(NSDictionary *)dictionary {
+- (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
         self.text = dictionary[@"text"];
@@ -26,9 +26,25 @@
         self.tweetId = dictionary[@"id"];
         self.retweetCount = [dictionary[@"retweet_count"] integerValue];
         self.favoriteCount = [dictionary[@"favorite_count"] integerValue];
+        self.favorited = [dictionary[@"favorited"] boolValue];
+        self.retweeted = [dictionary[@"retweeted"] boolValue];
     }
     
     return self;
+}
+
+- (void)favoriteWithCompletion:(void (^)(Tweet *tweet, NSError *error))completion {
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValue:self.tweetId forKey:@"id"];
+    if (self.favorited) {
+        [[TwitterClient sharedInstance] unfavoriteTweetWithParameters:params completion:completion];
+    } else {
+        [[TwitterClient sharedInstance] favoriteTweetWithParameters:params completion:completion];
+    }
+}
+
+- (void)retweetWithCompletion:(void (^)(Tweet *tweet, NSError *error))completion {
+    [[TwitterClient sharedInstance] retweetId:self.tweetId completion:completion];
 }
 
 

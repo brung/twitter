@@ -10,14 +10,19 @@
 #import "User.h"
 
 @interface Tweet : NSObject
+@property (nonatomic, strong) NSString *tweetId;
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSDate *createdAt;
 @property (nonatomic, strong) User *user;
 @property (nonatomic) NSInteger retweetCount;
 @property (nonatomic) NSInteger favoriteCount;
+@property (nonatomic) BOOL favorited;
+@property (nonatomic) BOOL retweeted;
 
 
--(id)initWithDictionary:(NSDictionary *)dictionary;
+- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (void)favoriteWithCompletion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)retweetWithCompletion:(void (^)(Tweet *tweet, NSError *error))completion;
 
 + (NSArray *)tweetsWithArray:(NSArray *)array;
 
