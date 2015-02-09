@@ -34,20 +34,83 @@
     return self;
 }
 
-- (void)favoriteWithCompletion:(void (^)(Tweet *tweet, NSError *error))completion {
+- (void)toggleFavoritedStatus {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setValue:self.tweetId forKey:@"id"];
     if (self.favorited) {
-        [[TwitterClient sharedInstance] unfavoriteTweetWithParameters:params completion:completion];
+        [[TwitterClient sharedInstance] unfavoriteTweetWithParameters:params completion:^(Tweet *tweet, NSError *error) {
+            if (!error) {
+                self.favorited = NO;
+                self.favoriteCount--;
+                [self.delegate tweet:self didChangeFavorited:self.favorited];
+                NSLog(@"Success removing favorite");
+            } else {
+                NSLog(@"Error removing favorite");
+            }
+        }];
     } else {
-        [[TwitterClient sharedInstance] favoriteTweetWithParameters:params completion:completion];
+        [[TwitterClient sharedInstance] favoriteTweetWithParameters:params completion:^(Tweet *tweet, NSError *error) {
+            if (!error) {
+                self.favorited = YES;
+                self.favoriteCount++;
+                [self.delegate tweet:self didChangeFavorited:self.favorited];
+                NSLog(@"Success adding favorite");
+            } else {
+                NSLog(@"Error adding favorite: %@", error);
+            }
+
+        }];
     }
 }
 
-- (void)retweetWithCompletion:(void (^)(Tweet *tweet, NSError *error))completion {
-    [[TwitterClient sharedInstance] retweetId:self.tweetId completion:completion];
+- (void)toggleRetweetedStatus {
+    if (self.retweeted) {
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        [params setValue:@"200" forKey:@"count"];
+        [params setValue:@"true" forKey:@"trim_user"];
+        [params setValue:@"true" forKey:@"exclude_replies"];
+        [params setValue:@"true" forKey:@"include_rts"];
+        [params setValue:[User currentUser].screename forKey:@"screen_name"];
+        [[TwitterClient sharedInstance] getUserTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
+            if (!error) {
+                for (Tweet *tweet in tweets) {
+                    NSLog(@"Looking to delete retweet of %@", self.tweetId);
+                    if ([tweet.retweetedId longLongValue] == [self.tweetId longLongValue]) {
+                        [[TwitterClient sharedInstance] destroyTweet:tweet.tweetId completion:^(Tweet *tweet, NSError *error) {
+                            if (!error) {
+                                self.retweeted = NO;
+                                self.retweetCount--;
+                                [self.delegate tweet:self didChangeRetweeted:self.retweeted];
+                                NSLog(@"Success removing retweet");
+                            } else {
+                                NSLog(@"Error removing retweet %@", error);
+                            }
+                        }];
+                        break;
+                    } else {
+                        NSLog(@"Unable to find user's retweet");
+                    }
+                }
+            } else {
+                NSLog(@"Error removing tweet: unable to retrieve posted tweets %@", error);
+            }
+        }];
+    } else {
+        [[TwitterClient sharedInstance] retweetId:self.tweetId completion:^(Tweet *tweet, NSError *error) {
+            if (!error) {
+                self.retweeted = YES;
+                self.retweetCount++;
+                [self.delegate tweet:self didChangeRetweeted:self.retweeted];
+                NSLog(@"Success adding retweet");
+            } else {
+                NSLog(@"Error adding retweet: %@", error);
+            }
+
+        }];
+    }
 }
 
+#pragma  mark - Static methods
 
 + (NSArray *)tweetsWithArray:(NSArray *)array {
     NSMutableArray *tweets = [NSMutableArray array];
@@ -57,5 +120,6 @@
     }
     return tweets;
 }
+
 
 @end

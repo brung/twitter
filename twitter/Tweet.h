@@ -9,6 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
 
+@class Tweet;
+@protocol TweetDelegate <NSObject>
+
+-(void)tweet:(Tweet *)tweet didChangeFavorited:(BOOL)favorited;
+-(void)tweet:(Tweet *)tweet didChangeRetweeted:(BOOL)retweeted;
+
+
+@end
+
+
 @interface Tweet : NSObject
 @property (nonatomic, strong) NSString *tweetId;
 @property (nonatomic, strong) NSString *text;
@@ -20,10 +30,12 @@
 @property (nonatomic) BOOL retweeted;
 @property (nonatomic, strong) NSString *retweetedId;
 
+@property (nonatomic, strong) id<TweetDelegate> delegate;
+
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
-- (void)favoriteWithCompletion:(void (^)(Tweet *tweet, NSError *error))completion;
-- (void)retweetWithCompletion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)toggleFavoritedStatus;
+- (void)toggleRetweetedStatus;
 
 + (NSArray *)tweetsWithArray:(NSArray *)array;
 

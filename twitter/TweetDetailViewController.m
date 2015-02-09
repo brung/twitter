@@ -11,7 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import <NSDate+MinimalTimeAgo.h>
 
-@interface TweetDetailViewController ()
+@interface TweetDetailViewController () <TweetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *screennameLabel;
@@ -28,7 +28,6 @@
 
 @implementation TweetDetailViewController
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -44,7 +43,7 @@
     [self.favoriteButton setImage:[UIImage imageNamed:@"favoriteIcon_on"] forState:UIControlStateSelected];
     [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon"] forState:UIControlStateNormal];
     [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon_on"] forState:UIControlStateSelected];
-    [self updateScreenContentsWithTweet:self.tweet];
+    [self updateStatusContents];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,11 +51,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) updateScreenContentsWithTweet:(Tweet *)tweet {
-    self.tweet.favorited = tweet.favorited;
-    self.tweet.retweeted = tweet.retweeted;
-    self.tweet.favoriteCount = tweet.favoriteCount;
-    self.tweet.retweetCount =  tweet.retweetCount;
+- (void) updateStatusContents {
     self.retweetCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.retweetCount];
     self.favoriteCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.favoriteCount];
     self.favoriteButton.selected = self.tweet.favorited;
@@ -65,29 +60,13 @@
 
 #pragma mark - Buttons
 - (IBAction)onFavoriteTap:(id)sender {
-    [self.tweet favoriteWithCompletion:^(Tweet *tweet, NSError *error) {
-        if (!error) {
-            [self updateScreenContentsWithTweet:tweet];
-            NSLog(@"Successful edit favorite");
-            [self.delegate tweetDetailViewController:self favoritedTweet:tweet];
-        } else {
-            NSLog(@"Failed to favorite: %@", error);
-            //TODO display error message
-        }
-    }];
+    self.tweet.delegate = self;
+    [self.tweet toggleFavoritedStatus];
 }
 
 - (IBAction)onRetweetTap:(id)sender {
-    [self.tweet retweetWithCompletion:^(Tweet *tweet, NSError *error) {
-        if (!error) {
-            [self updateScreenContentsWithTweet:tweet];
-            [self.delegate tweetDetailViewController:self reTweet:tweet];
-            NSLog(@"Successful retweet");
-        } else {
-            NSLog(@"Failed to retweet: %@", error);
-            //TODO display error message
-        }
-    }];
+    self.tweet.delegate = self;
+    [self.tweet toggleRetweetedStatus];
 }
 
 - (IBAction)onReplyTap:(id)sender {
@@ -97,6 +76,20 @@
     [self.navigationController presentViewController:nvc animated:YES completion:nil];
 }
 
+
+#pragma mark - TweetDelegate methods
+- (void) tweet:(Tweet *)tweet didChangeFavorited:(BOOL)favorited {
+    self.tweet = tweet;
+    NSLog(@"Setting %@ to %@", self.tweet.favorited ? @"YES" : @"NO", favorited ? @"YES": @"NO");
+    [self updateStatusContents];
+    [self.delegate tweetDetailViewController:self didChangeFavorited:favorited];
+}
+
+- (void)tweet:(Tweet *)tweet didChangeRetweeted:(BOOL)retweeted {
+    self.tweet = tweet;
+    [self updateStatusContents];
+    [self.delegate tweetDetailViewController:self didChangeRetweeted:retweeted];
+}
 
 /*
 #pragma mark - Navigation

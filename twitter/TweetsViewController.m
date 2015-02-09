@@ -119,6 +119,7 @@ NSString * const TweetCellNibName = @"TweetCell";
     TweetDetailViewController *vc = [[TweetDetailViewController alloc] init];
     vc.tweet = self.tweets[indexPath.row];
     vc.delegate = self;
+    vc.indexPath = indexPath;
     //UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -143,73 +144,40 @@ NSString * const TweetCellNibName = @"TweetCell";
             [self.navigationController presentViewController:nvc animated:YES completion:nil];
             break;
         }
-        case ButtonIDRetweet:
-        {
-            [cell.tweet retweetWithCompletion:^(Tweet *tweet, NSError *error) {
-                if (!error) {
-                    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-                    [self updateTweet:tweet atIndexPath:indexPath];
-                    NSLog(@"Successful retweet");
-                } else {
-                    NSLog(@"Failed to retweet: %@", error);
-                    //TODO display error message
-                }
-            }];
-            break;
-        }
-        case ButtonIDFavorite:
-        {
-            [cell.tweet favoriteWithCompletion:^(Tweet *tweet, NSError *error) {
-                if (!error) {
-                    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-                    [self updateTweet:tweet atIndexPath:indexPath];
-                    NSLog(@"Successful edit favorite");
-                } else {
-                    NSLog(@"Failed to favorite: %@", error);
-                    //TODO display error message
-                }
-            }];
-
-            break;
-        }
         default:
             break;
     }
 }
 
-- (void)updateTweet:(Tweet *)tweet atIndexPath:(NSIndexPath *)indexPath {
-    Tweet *origTweet = self.tweets[indexPath.row];
-    origTweet.favorited = tweet.favorited;
-    origTweet.retweeted = tweet.retweeted;
-    origTweet.favoriteCount = tweet.favoriteCount;
-    origTweet.retweetCount =  tweet.retweetCount;
+- (void) tweetCell:(TweetCell *)cell didChangeFavoritedStatus:(BOOL)favorited {
+    cell.tweet.favorited = favorited;
+    NSLog(@"changing favorite to %@", favorited ? @"YES" : @"NO");
+    [self.tableView reloadData];
+    [self updateTweetAtIndexPath:[self.tableView indexPathForCell:cell]];
+}
+
+- (void) tweetCell:(TweetCell *)cell didChangeRetweetedStatus:(BOOL)retweeted {
+    cell.tweet.retweeted = retweeted;
+    [self.tableView reloadData];
+    [self updateTweetAtIndexPath:[self.tableView indexPathForCell:cell]];
+}
+
+- (void)updateTweetAtIndexPath:(NSIndexPath *)indexPath {
+//    Tweet *origTweet = self.tweets[indexPath.row];
+//    origTweet.favorited = tweet.favorited;
+//    origTweet.retweeted = tweet.retweeted;
+//    origTweet.favoriteCount = tweet.favoriteCount;
+//    origTweet.retweetCount =  tweet.retweetCount;
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - TweetDetailViewControllerDelegate methods
-- (void) tweetDetailViewController:(TweetDetailViewController *)vc favoritedTweet:(Tweet *)tweet {
-    for (int tweetIndex=0; tweetIndex < self.tweets.count; tweetIndex++) {
-        NSString *tweetId = ((Tweet *)self.tweets[tweetIndex]).tweetId;
-        NSString *test = tweet.tweetId;
-        NSLog(@"%@ and %@", tweetId, test);
-        if([test longLongValue] == [tweetId longLongValue]) {
-            NSLog(@"Found match");
-            [self updateTweet:tweet atIndexPath:[NSIndexPath indexPathForRow:tweetIndex inSection:0]];
-            break;
-        }
-    }
+- (void) tweetDetailViewController:(TweetDetailViewController *)vc didChangeFavorited:(BOOL)favorited {
+    [self updateTweetAtIndexPath:vc.indexPath];
 }
-- (void) tweetDetailViewController:(TweetDetailViewController *)vc reTweet:(Tweet *)tweet {
-    for (int tweetIndex=0; tweetIndex < self.tweets.count; tweetIndex++) {
-        NSString *tweetId = ((Tweet *)self.tweets[tweetIndex]).tweetId;
-        NSString *test = tweet.retweetedId;
-        NSLog(@"%@ and %@", tweetId, test);
-        if([test longLongValue] == [tweetId longLongValue]) {
-            NSLog(@"Found match");
-            [self updateTweet:tweet atIndexPath:[NSIndexPath indexPathForRow:tweetIndex inSection:0]];
-            break;
-        }
-    }
+
+- (void) tweetDetailViewController:(TweetDetailViewController *)vc didChangeRetweeted:(BOOL)retweeted {
+    [self updateTweetAtIndexPath:vc.indexPath];
 }
 
 

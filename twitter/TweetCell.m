@@ -10,7 +10,7 @@
 #import "UIImageView+AFNetworking.h"
 #import <NSDateMinimalTimeAgo/NSDate+MinimalTimeAgo.h>
 
-@interface TweetCell()
+@interface TweetCell() <TweetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *screennameLabel;
@@ -56,6 +56,7 @@
     self.timeLabel.text = [tweet.createdAt timeAgo];
     self.retweetButton.selected = tweet.retweeted;
     self.favoriteButton.selected = tweet.favorited;
+    self.tweet.delegate = self;
 }
 
 - (IBAction)onReplyTap:(id)sender {
@@ -64,10 +65,20 @@
 
 - (IBAction)onRetweetTap:(id)sender {
     [self.delegate tweetCell:self didPressButton:ButtonIDRetweet];
+    [self.tweet toggleRetweetedStatus];
 }
 
 - (IBAction)onFavoriteTap:(id)sender {
     [self.delegate tweetCell:self didPressButton:ButtonIDFavorite];
+    [self.tweet toggleFavoritedStatus];
+}
+
+- (void)tweet:(Tweet *)tweet didChangeFavorited:(BOOL)favorited {
+    [self.delegate tweetCell:self didChangeFavoritedStatus:favorited];
+}
+
+- (void)tweet:(Tweet *)tweet didChangeRetweeted:(BOOL)retweeted {
+    [self.delegate tweetCell:self didChangeRetweetedStatus:retweeted];
 }
 
 @end

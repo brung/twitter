@@ -79,11 +79,36 @@ NSString * const UserPostedNewTweet = @"UserPostedNewTweet";
     }];
 }
 
+- (void)getUserTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
+    [self GET:@"1.1/statuses/user_timeline.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Response: %@", responseObject);
+        NSArray *tweets = [Tweet tweetsWithArray:responseObject];
+        completion(tweets, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completion(nil, error);
+    }];
+}
+
+
 - (void)updateTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
     //https://dev.twitter.com/rest/reference/post/statuses/update
     //REquired : status
     //Optional : in_reply_to_status_id, possibly_sensitvie, lat, long, place_id, display_coordinates, trim_user, media_ids
     [self POST:@"1.1/statuses/update.json" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        // No op.  All data passed in parasms
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        Tweet *returnTweet = [[Tweet alloc] initWithDictionary:responseObject];
+        completion(returnTweet, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)destroyTweet:(NSString *)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    //https://dev.twitter.com/rest/reference/post/statuses/update
+    //REquired : status
+    //Optional : in_reply_to_status_id, possibly_sensitvie, lat, long, place_id, display_coordinates, trim_user, media_ids
+    [self POST:[NSString stringWithFormat:@"1.1/statuses/destroy/%@.json",tweetId]  parameters:[NSDictionary dictionary] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         // No op.  All data passed in parasms
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         Tweet *returnTweet = [[Tweet alloc] initWithDictionary:responseObject];
@@ -106,6 +131,10 @@ NSString * const UserPostedNewTweet = @"UserPostedNewTweet";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         completion(nil, error);
     }];
+}
+
+- (void)deleteRetweetId:(NSString *)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    
 }
 
 - (void)favoriteTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {

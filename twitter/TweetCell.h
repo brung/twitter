@@ -16,6 +16,9 @@ static int const ButtonIDFavorite = 3;
 @class TweetCell;
 @protocol TweetCellDelegate <NSObject>
 - (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonID;
+- (void)tweetCell:(TweetCell *)cell didChangeFavoritedStatus:(BOOL)favorited;
+- (void)tweetCell:(TweetCell *)cell didChangeRetweetedStatus:(BOOL)retweeted;
+
 @end
 
 @interface TweetCell : UITableViewCell

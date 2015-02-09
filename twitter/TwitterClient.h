@@ -20,7 +20,9 @@ extern NSString * const UserPostedNewTweet;
 - (void)openURL:(NSURL *)url;
 
 - (void)homeTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion;
+- (void)getUserTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion;
 - (void)updateTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)destroyTweet:(NSString *)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)retweetId:(NSString *)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)unfavoriteTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)favoriteTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion;
