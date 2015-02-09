@@ -23,6 +23,7 @@ static NSInteger const ResultCount = 20;
 @property (nonatomic, strong) TweetCell *prototypeCell;
 @property (nonatomic) BOOL isUpdating;
 @property (nonatomic) BOOL isPaginating;
+@property (nonatomic) BOOL isInsertingNewPost;
 
 @end
 
@@ -38,8 +39,11 @@ NSString * const TweetCellNibName = @"TweetCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPostNewTweetNotification:) name:UserPostedNewTweet object:nil];
+    
     self.isUpdating = NO;
     self.isPaginating = NO;
+    self.isInsertingNewPost = NO;
     
     self.title = @"Home";
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLeftButton)];
@@ -67,6 +71,18 @@ NSString * const TweetCellNibName = @"TweetCell";
     
     [self fetchTweets];
 
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    if (self.isInsertingNewPost) {
+        self.isInsertingNewPost = NO;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [UIView animateWithDuration:1 animations:^{
+            [self.tableView beginUpdates];
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
+            [self.tableView endUpdates];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -244,6 +260,15 @@ NSString * const TweetCellNibName = @"TweetCell";
 
 - (void)onRefresh {
     [self fetchTweets];
+}
+
+- (void)onPostNewTweetNotification:(NSNotification *) notification {
+    NSDictionary *userInfo = notification.userInfo;
+    Tweet *newTweet = userInfo[@"tweet"];
+    NSMutableArray *newTweets = [NSMutableArray arrayWithObject:newTweet];
+    [newTweets addObjectsFromArray:self.tweets];
+    self.tweets = newTweets;
+    self.isInsertingNewPost = YES;
 }
 
 /*

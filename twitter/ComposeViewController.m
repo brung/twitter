@@ -75,6 +75,7 @@
     [[TwitterClient sharedInstance] updateTweetWithParameters:params completion:^(Tweet *tweet, NSError *error) {
         if(!error) {
             NSLog(@"Posted %@", params);
+            [[NSNotificationCenter defaultCenter] postNotificationName:UserPostedNewTweet object:nil userInfo:[NSDictionary dictionaryWithObject:tweet forKey:@"tweet"]];
             [self dismissViewControllerAnimated:YES completion:nil];
         } else {
             NSLog(@"Failed to post %@", error);

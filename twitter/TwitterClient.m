@@ -11,6 +11,7 @@
 NSString * const kTwitterConsumerKey = @"LJrg3rFF5Dyy55iuX7n3tdAOe";
 NSString * const kTwitterConsumerSecret = @"jCGpEHF2zxoTqgq5NoNo8t11OBUv0tIBhO58dh5rfrn85J5x9B";
 NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
+NSString * const UserPostedNewTweet = @"UserPostedNewTweet";
 
 @interface TwitterClient()
 @property (nonatomic, strong) void (^loginCompletion)(User *user, NSError *error);
