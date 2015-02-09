@@ -21,6 +21,15 @@
             NSLog(@"Welcome to %@", user.name);
             // Modally present tweents view
             UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
+            UINavigationBar *navbar = nvc.navigationBar;
+            [navbar setBarTintColor:[UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1]];
+            navbar.tintColor = [UIColor whiteColor];
+            [navbar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                            [UIColor whiteColor],
+                                            NSForegroundColorAttributeName,
+                                            [UIColor whiteColor],
+                                            NSForegroundColorAttributeName,
+                                            nil]];
             [self presentViewController:nvc animated:YES completion:nil];
         } else {
             // Present error view

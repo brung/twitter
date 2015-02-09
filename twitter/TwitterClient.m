@@ -81,7 +81,6 @@ NSString * const UserPostedNewTweet = @"UserPostedNewTweet";
 
 - (void)getUserTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
     [self GET:@"1.1/statuses/user_timeline.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Response: %@", responseObject);
         NSArray *tweets = [Tweet tweetsWithArray:responseObject];
         completion(tweets, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -125,7 +124,6 @@ NSString * const UserPostedNewTweet = @"UserPostedNewTweet";
     [self POST:[NSString stringWithFormat: @"1.1/statuses/retweet/%@.json",tweetId] parameters:[NSDictionary dictionary] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         // No op.  All data passed in parasms
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Retweet %@", responseObject);
         Tweet *returnTweet = [[Tweet alloc] initWithDictionary:responseObject];
         completion(returnTweet, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
