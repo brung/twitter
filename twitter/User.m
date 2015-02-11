@@ -61,6 +61,12 @@ NSString * const kCurrentUserKey = @"kCurrentUserKey";
         self.screename = dictionary[@"screen_name"];
         self.profileImageUrl = dictionary[@"profile_image_url"];
         self.tagline = dictionary[@"description"];
+        self.backgroundImageUrl = dictionary[@"profile_background_image_url"];
+        self.statusCount = [dictionary[@"statuses_count"] integerValue];
+        self.followersCount = [dictionary[@"followers_count"] integerValue];
+        self.followingCount = [dictionary[@"friends_count"] integerValue];
+        self.backgroundColor = dictionary[@"profile_background_color"];
+        self.following = [dictionary[@"following"] boolValue];
     }
     
     return self;

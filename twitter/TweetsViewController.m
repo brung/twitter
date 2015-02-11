@@ -9,6 +9,7 @@
 #import "TweetsViewController.h"
 #import "TweetDetailViewController.h"
 #import "ComposeViewController.h"
+#import "UserDetailViewController.h"
 #import "TwitterClient.h"
 #import "User.h"
 #import "Tweet.h"
@@ -16,7 +17,7 @@
 
 static NSInteger const ResultCount = 20;
 
-@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate, TweetDetailViewControllerDelegate>
+@interface TweetsViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, TweetCellDelegate, TweetDetailViewControllerDelegate>
 @property (nonatomic, strong) NSArray *tweets;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -136,6 +137,13 @@ NSString * const TweetCellNibName = @"TweetCell";
 - (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonID {
     switch(buttonID)
     {
+        case ButtongIDUserProfile:
+        {
+            UserDetailViewController *vc = [[UserDetailViewController alloc] init];
+            vc.user = cell.tweet.user;
+            [self.navigationController presentViewController:vc animated:YES completion:nil];
+            break;
+        }
         case ButtonIDReply:
         {
             ComposeViewController *vc = [[ComposeViewController alloc] init];
@@ -163,11 +171,6 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 - (void)updateTweetAtIndexPath:(NSIndexPath *)indexPath {
-//    Tweet *origTweet = self.tweets[indexPath.row];
-//    origTweet.favorited = tweet.favorited;
-//    origTweet.retweeted = tweet.retweeted;
-//    origTweet.favoriteCount = tweet.favoriteCount;
-//    origTweet.retweetCount =  tweet.retweetCount;
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
 }
 
@@ -178,6 +181,11 @@ NSString * const TweetCellNibName = @"TweetCell";
 
 - (void) tweetDetailViewController:(TweetDetailViewController *)vc didChangeRetweeted:(BOOL)retweeted {
     [self updateTweetAtIndexPath:vc.indexPath];
+}
+
+#pragma mark - UIAlertViewDelegate methods
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [self fetchTweets];
 }
 
 
@@ -217,6 +225,7 @@ NSString * const TweetCellNibName = @"TweetCell";
                 self.isPaginating = NO;
             } else {
                 NSLog(@"Got an error retrieving tweets: %@", error);
+                [[[UIAlertView alloc] initWithTitle:@"Network error" message:@"Unable to retrieve tweets" delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:nil] show];
                 self.isUpdating = NO;
                 self.isPaginating = NO;
             }

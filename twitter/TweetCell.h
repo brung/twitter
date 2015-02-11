@@ -12,6 +12,7 @@
 static int const ButtonIDReply = 1;
 static int const ButtonIDRetweet = 2;
 static int const ButtonIDFavorite = 3;
+static int const ButtongIDUserProfile = 4;
 
 @class TweetCell;
 @protocol TweetCellDelegate <NSObject>
@@ -19,10 +20,12 @@ static int const ButtonIDFavorite = 3;
 - (void)tweetCell:(TweetCell *)cell didChangeFavoritedStatus:(BOOL)favorited;
 - (void)tweetCell:(TweetCell *)cell didChangeRetweetedStatus:(BOOL)retweeted;
 
+
 @end
 
 @interface TweetCell : UITableViewCell
 @property (nonatomic, strong) Tweet *tweet;
 @property (nonatomic, strong) id<TweetCellDelegate> delegate;
+- (void)animateProfileTapNoOp;
 
 @end

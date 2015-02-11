@@ -28,6 +28,10 @@
     // Initialization code
     self.profileImage.layer.cornerRadius = 3;
     self.profileImage.clipsToBounds = YES;
+    UIGestureRecognizer *singleTapImage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onUserProfileTap)];
+    [self.profileImage addGestureRecognizer:singleTapImage];
+    [self.profileImage setMultipleTouchEnabled:YES];
+    [self.profileImage setUserInteractionEnabled:YES];
     [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon"] forState:UIControlStateNormal];
     [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon_on"] forState:UIControlStateSelected];
     [self.favoriteButton setImage:[UIImage imageNamed:@"favoriteIcon"] forState:UIControlStateNormal];
@@ -68,6 +72,10 @@
     [self.tweet toggleRetweetedStatus];
 }
 
+- (void)onUserProfileTap {
+    [self.delegate tweetCell:self didPressButton:ButtongIDUserProfile];
+}
+
 - (IBAction)onFavoriteTap:(id)sender {
     [self.delegate tweetCell:self didPressButton:ButtonIDFavorite];
     [self.tweet toggleFavoritedStatus];
@@ -79,6 +87,17 @@
 
 - (void)tweet:(Tweet *)tweet didChangeRetweeted:(BOOL)retweeted {
     [self.delegate tweetCell:self didChangeRetweetedStatus:retweeted];
+}
+
+- (void)animateProfileTapNoOp {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.profileImage.transform = CGAffineTransformMakeScale(1.15, 1.15);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0 initialSpringVelocity:0.8 options:0 animations:^{
+        } completion:^(BOOL finished) {
+            self.profileImage.transform = CGAffineTransformMakeScale(1, 1);
+        }];
+    }];
 }
 
 @end
