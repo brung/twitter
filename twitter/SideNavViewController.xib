@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SideNavViewController">
+            <connections>
+                <outlet property="nameLabel" destination="tcy-aP-URi" id="2bi-4n-v4f"/>
+                <outlet property="profileImage" destination="nFe-3X-1Xl" id="BMy-4v-lLr"/>
+                <outlet property="screennameLabel" destination="1TX-PD-0Wa" id="ZVs-UK-06D"/>
+                <outlet property="tableView" destination="ohZ-tQ-JgZ" id="KOn-Ut-IaG"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nFe-3X-1Xl">
+                    <rect key="frame" x="8" y="40" width="64" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="Exd-22-A7O"/>
+                        <constraint firstAttribute="width" constant="64" id="vxS-mu-B4s"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Michael Moran" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcy-aP-URi">
+                    <rect key="frame" x="80" y="54" width="98" height="17"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@mmoran" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TX-PD-0Wa">
+                    <rect key="frame" x="80" y="72" width="65" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" alpha="0.44999999999999962" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ohZ-tQ-JgZ">
+                    <rect key="frame" x="0.0" y="112" width="600" height="488"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="260" id="hYN-fH-Hwn"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="hYN-fH-Hwn"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="UUG-yK-BGT"/>
+                        <outlet property="delegate" destination="-1" id="HyC-XM-Sb2"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="ohZ-tQ-JgZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="36s-dg-xQK"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tcy-aP-URi" secondAttribute="trailing" constant="8" id="8O7-4d-SMf"/>
+                <constraint firstItem="tcy-aP-URi" firstAttribute="leading" secondItem="nFe-3X-1Xl" secondAttribute="trailing" constant="8" id="FBu-kD-wKe"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1TX-PD-0Wa" secondAttribute="trailing" constant="8" id="FRd-7P-y4F"/>
+                <constraint firstItem="nFe-3X-1Xl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="JIH-zs-TtD"/>
+                <constraint firstItem="1TX-PD-0Wa" firstAttribute="leading" secondItem="nFe-3X-1Xl" secondAttribute="trailing" constant="8" id="N0N-bY-8Rn"/>
+                <constraint firstAttribute="trailing" secondItem="ohZ-tQ-JgZ" secondAttribute="trailing" id="SL1-zo-vIx"/>
+                <constraint firstItem="tcy-aP-URi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="54" id="Wlr-dA-2u8"/>
+                <constraint firstItem="ohZ-tQ-JgZ" firstAttribute="top" secondItem="nFe-3X-1Xl" secondAttribute="bottom" constant="8" id="X6s-a5-bA4"/>
+                <constraint firstItem="nFe-3X-1Xl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="40" id="XxO-B2-fXc"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tcy-aP-URi" secondAttribute="trailing" constant="8" id="fJn-Lx-Aq9"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1TX-PD-0Wa" secondAttribute="trailing" constant="8" id="n8j-ra-7O0"/>
+                <constraint firstAttribute="bottom" secondItem="ohZ-tQ-JgZ" secondAttribute="bottom" id="nm8-pN-7W3"/>
+                <constraint firstItem="tcy-aP-URi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="54" id="oBe-mW-kfk"/>
+                <constraint firstAttribute="trailing" secondItem="ohZ-tQ-JgZ" secondAttribute="trailing" id="xPp-am-PDX"/>
+                <constraint firstItem="1TX-PD-0Wa" firstAttribute="top" secondItem="tcy-aP-URi" secondAttribute="bottom" constant="1" id="yes-Ag-tEP"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Wlr-dA-2u8"/>
+                    <exclude reference="fJn-Lx-Aq9"/>
+                    <exclude reference="FRd-7P-y4F"/>
+                    <exclude reference="xPp-am-PDX"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="137" y="160"/>
+        </view>
+    </objects>
+</document>

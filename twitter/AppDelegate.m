@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "SideNavViewController.h"
+#import "MainViewController.h"
 #import "TweetsViewController.h"
 #import "TwitterClient.h"
 #import "User.h"
@@ -28,19 +30,20 @@
     
     User *user = [User currentUser];
     if (user != nil) {
-        NSLog(@"Welcome %@", user.name);
-        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
-        self.window.rootViewController = nvc;
-        
-        UINavigationBar *navbar = nvc.navigationBar;
-        [navbar setBarTintColor:[UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1]];
-        navbar.tintColor = [UIColor whiteColor];
-        [navbar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                        [UIColor whiteColor],
-                                        NSForegroundColorAttributeName,
-                                        [UIColor whiteColor],
-                                        NSForegroundColorAttributeName,
-                                        nil]];
+//        NSLog(@"Welcome %@", user.name);
+//        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
+//        UINavigationBar *navbar = nvc.navigationBar;
+//        [navbar setBarTintColor:[UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1]];
+//        navbar.tintColor = [UIColor whiteColor];
+//        [navbar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+//                                        [UIColor whiteColor],
+//                                        NSForegroundColorAttributeName,
+//                                        [UIColor whiteColor],
+//                                        NSForegroundColorAttributeName,
+//                                        nil]];
+//
+//        self.window.rootViewController = nvc;
+    self.window.rootViewController = [[MainViewController alloc] init];
     } else {
         NSLog(@"Not logged in");
         self.window.rootViewController = [[LoginViewController alloc] init];

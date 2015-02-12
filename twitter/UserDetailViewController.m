@@ -49,7 +49,7 @@ static NSInteger const ResultCount = 20;
     self.isUpdating = NO;
     self.isPaginating = NO;
     
-    [self.UsersBGImage setImageWithURL:[NSURL URLWithString:self.user.backgroundImageUrl]];
+    //[self.UsersBGImage setImageWithURL:[NSURL URLWithString:self.user.backgroundImageUrl]];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -69,6 +69,22 @@ static NSInteger const ResultCount = 20;
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 32;
+    }
+    return 0;
+}
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    if (section == 0) {
+//        UIImageView * header = [[[UIImageView alloc] initWithFrame:CGRectMake(0,0)
+//        [header setImageWithURL:[NSURL URLWithString:self.user.backgroundImageUrl]];
+//        
+//    }
+//    return nil;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
