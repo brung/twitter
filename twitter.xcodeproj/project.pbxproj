@@ -19,8 +19,6 @@
 		B87BDAC61A8BD9A000A2A1BB /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B87BDAC41A8BD9A000A2A1BB /* MenuCell.m */; };
 		B87BDAC71A8BD9A000A2A1BB /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B87BDAC51A8BD9A000A2A1BB /* MenuCell.xib */; };
 		B87BDACA1A8BDB2E00A2A1BB /* MenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B87BDAC91A8BDB2E00A2A1BB /* MenuItem.m */; };
-		B87BDACE1A8C6E5100A2A1BB /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B87BDACC1A8C6E5100A2A1BB /* MainViewController.m */; };
-		B87BDACF1A8C6E5100A2A1BB /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B87BDACD1A8C6E5100A2A1BB /* MainViewController.xib */; };
 		B8B441BC1A81C03300D8969F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B441BB1A81C03300D8969F /* main.m */; };
 		B8B441BF1A81C03300D8969F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B441BE1A81C03300D8969F /* AppDelegate.m */; };
 		B8B441C71A81C03300D8969F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B441C61A81C03300D8969F /* Images.xcassets */; };
@@ -69,9 +67,6 @@
 		B87BDAC51A8BD9A000A2A1BB /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		B87BDAC81A8BDB2E00A2A1BB /* MenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItem.h; sourceTree = "<group>"; };
 		B87BDAC91A8BDB2E00A2A1BB /* MenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItem.m; sourceTree = "<group>"; };
-		B87BDACB1A8C6E5100A2A1BB /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		B87BDACC1A8C6E5100A2A1BB /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		B87BDACD1A8C6E5100A2A1BB /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		B8B441B61A81C03300D8969F /* twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B441BA1A81C03300D8969F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8B441BB1A81C03300D8969F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -223,9 +218,6 @@
 				B87BDABE1A8BD77400A2A1BB /* SideNavViewController.h */,
 				B87BDABF1A8BD77400A2A1BB /* SideNavViewController.m */,
 				B87BDAC01A8BD77400A2A1BB /* SideNavViewController.xib */,
-				B87BDACB1A8C6E5100A2A1BB /* MainViewController.h */,
-				B87BDACC1A8C6E5100A2A1BB /* MainViewController.m */,
-				B87BDACD1A8C6E5100A2A1BB /* MainViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -348,7 +340,6 @@
 				B81979921A86D11F00F0A399 /* ComposeViewController.xib in Resources */,
 				B87BDAC71A8BD9A000A2A1BB /* MenuCell.xib in Resources */,
 				B87BDABD1A8B1D8900A2A1BB /* UserCell.xib in Resources */,
-				B87BDACF1A8C6E5100A2A1BB /* MainViewController.xib in Resources */,
 				B8B441CA1A81C03300D8969F /* LaunchScreen.xib in Resources */,
 				B87BDAB81A8B1A2800A2A1BB /* UserDetailViewController.xib in Resources */,
 				B8B441C71A81C03300D8969F /* Images.xcassets in Resources */,
@@ -406,7 +397,6 @@
 				B8E3293F1A81E04E00327AE0 /* LoginViewController.m in Sources */,
 				B8B441BF1A81C03300D8969F /* AppDelegate.m in Sources */,
 				B87BDAC11A8BD77400A2A1BB /* SideNavViewController.m in Sources */,
-				B87BDACE1A8C6E5100A2A1BB /* MainViewController.m in Sources */,
 				B8E329481A83292D00327AE0 /* User.m in Sources */,
 				B87BDAB71A8B1A2800A2A1BB /* UserDetailViewController.m in Sources */,
 				B87BDABC1A8B1D8900A2A1BB /* UserCell.m in Sources */,

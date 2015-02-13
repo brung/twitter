@@ -8,7 +8,7 @@
 
 #import "LoginViewController.h"
 #import "TwitterClient.h"
-#import "MainViewController.h"
+#import "SideNavViewController.h"
 
 @interface LoginViewController ()
 
@@ -19,19 +19,7 @@
     [[TwitterClient sharedInstance] loginWithCompletion:^(User *user, NSError *error) {
         if (user != nil) {
             NSLog(@"Welcome to %@", user.name);
-            // Modally present tweents view
-//            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:[[SideNavViewController alloc] init]];
-//            UINavigationBar *navbar = nvc.navigationBar;
-//            [navbar setBarTintColor:[UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1]];
-//            navbar.tintColor = [UIColor whiteColor];
-//            [navbar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-//                                            [UIColor whiteColor],
-//                                            NSForegroundColorAttributeName,
-//                                            [UIColor whiteColor],
-//                                            NSForegroundColorAttributeName,
-//                                            nil]];
-//            [self presentViewController:nvc animated:YES completion:nil];
-            [self presentViewController:[[MainViewController alloc] init] animated:YES completion:nil];
+            [self presentViewController:[[SideNavViewController alloc] init] animated:YES completion:nil];
         } else {
             // Present error view
         }

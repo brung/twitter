@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SideNavViewController">
             <connections>
+                <outlet property="contentView" destination="oAA-pq-EWw" id="xJO-YW-kfc"/>
                 <outlet property="nameLabel" destination="tcy-aP-URi" id="2bi-4n-v4f"/>
                 <outlet property="profileImage" destination="nFe-3X-1Xl" id="BMy-4v-lLr"/>
                 <outlet property="screennameLabel" destination="1TX-PD-0Wa" id="ZVs-UK-06D"/>
@@ -53,6 +54,14 @@
                         <outlet property="delegate" destination="-1" id="HyC-XM-Sb2"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oAA-pq-EWw">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="hck-HJ-VNO" appends="YES" id="31d-tm-2AW"/>
+                    </connections>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -66,10 +75,14 @@
                 <constraint firstItem="tcy-aP-URi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="54" id="Wlr-dA-2u8"/>
                 <constraint firstItem="ohZ-tQ-JgZ" firstAttribute="top" secondItem="nFe-3X-1Xl" secondAttribute="bottom" constant="8" id="X6s-a5-bA4"/>
                 <constraint firstItem="nFe-3X-1Xl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="40" id="XxO-B2-fXc"/>
+                <constraint firstItem="oAA-pq-EWw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZQ7-U3-hjx"/>
+                <constraint firstItem="oAA-pq-EWw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="as9-tR-Tu3"/>
+                <constraint firstAttribute="trailing" secondItem="oAA-pq-EWw" secondAttribute="trailing" id="dLO-Fl-3oW"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tcy-aP-URi" secondAttribute="trailing" constant="8" id="fJn-Lx-Aq9"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1TX-PD-0Wa" secondAttribute="trailing" constant="8" id="n8j-ra-7O0"/>
                 <constraint firstAttribute="bottom" secondItem="ohZ-tQ-JgZ" secondAttribute="bottom" id="nm8-pN-7W3"/>
                 <constraint firstItem="tcy-aP-URi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="54" id="oBe-mW-kfk"/>
+                <constraint firstAttribute="bottom" secondItem="oAA-pq-EWw" secondAttribute="bottom" id="xKv-N9-MGq"/>
                 <constraint firstAttribute="trailing" secondItem="ohZ-tQ-JgZ" secondAttribute="trailing" id="xPp-am-PDX"/>
                 <constraint firstItem="1TX-PD-0Wa" firstAttribute="top" secondItem="tcy-aP-URi" secondAttribute="bottom" constant="1" id="yes-Ag-tEP"/>
             </constraints>
@@ -83,5 +96,10 @@
             </variation>
             <point key="canvasLocation" x="137" y="160"/>
         </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="hck-HJ-VNO">
+            <connections>
+                <action selector="onViewSwipe:" destination="-1" id="3lD-8W-Gt8"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
 </document>

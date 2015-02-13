@@ -16,12 +16,16 @@
 NSString * const MenuCellNib = @"MenuCell";
 
 @interface SideNavViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *screennameLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *menuItems;
 @property (nonatomic, strong) MenuCell *prototypeCell;
+@property (nonatomic, assign) CGPoint startPoint;
+@property (nonatomic, strong) NSArray *viewControllers;
+@property (nonatomic) NSInteger currentView;
 @end
 
 @implementation SideNavViewController
@@ -42,10 +46,42 @@ NSString * const MenuCellNib = @"MenuCell";
     self.screennameLabel.text = currentUser.screename;
     
     self.menuItems = [MenuItem getMenuItems];
+    NSMutableArray *vcItems = [NSMutableArray array];
     
 
     [self.tableView registerNib:[UINib nibWithNibName:MenuCellNib bundle:nil] forCellReuseIdentifier:MenuCellNib];
     [self.tableView reloadData];
+    
+    //User Details
+    UserDetailViewController *uvc = [[UserDetailViewController alloc] init];
+    uvc.view.frame = self.view.frame;
+    [vcItems addObject:uvc];
+    
+    //Tweets
+    TweetsViewController *tvc = [[TweetsViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
+    // Modally present tweents view
+    UINavigationBar *navbar = nvc.navigationBar;
+    [navbar setBarTintColor:[UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1]];
+    navbar.tintColor = [UIColor whiteColor];
+    [navbar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                    [UIColor whiteColor],
+                                    NSForegroundColorAttributeName,
+                                    [UIColor whiteColor],
+                                    NSForegroundColorAttributeName,
+                                    nil]];
+    nvc.view.frame = self.view.frame;
+
+    [vcItems addObject:nvc];
+    [nvc willMoveToParentViewController:self];
+    [self addChildViewController:nvc];
+    [self.contentView addSubview:nvc.view];
+    
+    //Mentions
+    [vcItems addObject:nvc];
+    
+    self.viewControllers = vcItems;
+    self.currentView = 1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,16 +116,51 @@ NSString * const MenuCellNib = @"MenuCell";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    if (indexPath.row == 0) {
-//        UserDetailViewController *vc = [[UserDetailViewController alloc] init];
-//        vc.user = [User currentUser];
-//        [self.contentView addSubview: vc.view];
-//    } else     if (indexPath.row == 1) {
-//        TweetsViewController *vc = [[TweetsViewController alloc] init];
-//        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
-//        [self.contentView addSubview: nvc.view];
-//    }
+    UIViewController *vc = self.viewControllers[self.currentView];
+    [vc willMoveToParentViewController:nil];
+    [vc didMoveToParentViewController:nil];
+    
+    vc = self.viewControllers[indexPath.row];
+    [vc willMoveToParentViewController:self];
+    [self addChildViewController:vc];
+    vc.view.frame = self.view.frame;
+    [self.contentView addSubview:vc.view];
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        self.contentView.transform = CGAffineTransformMakeTranslation(0, 0);
+    }];
 }
+
+
+#pragma mark - GestureRecognizers
+- (IBAction)onViewSwipe:(UIPanGestureRecognizer *)sender {
+    CGPoint velocity = [sender velocityInView:self.view];
+    CGPoint translation = [sender translationInView:self.view];
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        self.startPoint = translation;
+    } else if (sender.state == UIGestureRecognizerStateChanged){
+        float newX = translation.x;
+        if (translation.x < 0) {
+            newX = 0;
+        } else if (translation.x > self.view.bounds.size.width) {
+            newX = self.view.bounds.size.width;
+        }
+        sender.view.transform = CGAffineTransformTranslate(sender.view.transform, newX, 0);
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        if (velocity.x > 0) {
+            [UIView animateWithDuration:0.3 animations:^{
+                float screenWidth = self.view.bounds.size.width-60;
+                sender.view.transform = CGAffineTransformMakeTranslation(screenWidth, 0);
+            }];
+        } else if (velocity.x <= 0) {
+            [UIView animateWithDuration:0.3 animations:^{
+                sender.view.transform = CGAffineTransformMakeTranslation(0, 0);
+            }];
+            
+        }
+    }
+}
+
 /*
 #pragma mark - Navigation
 

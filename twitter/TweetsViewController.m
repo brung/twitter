@@ -135,9 +135,10 @@ NSString * const TweetCellNibName = @"TweetCell";
 
 #pragma mark - TweetCellDelegate
 - (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonID {
+    NSLog(@"In TweetsViewController didPressButton %ld", buttonID  );
     switch(buttonID)
     {
-        case ButtongIDUserProfile:
+        case ButtonIDUserProfile:
         {
             UserDetailViewController *vc = [[UserDetailViewController alloc] init];
             vc.user = cell.tweet.user;

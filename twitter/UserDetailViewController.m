@@ -46,6 +46,10 @@ static NSInteger const ResultCount = 20;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    if (!self.user) {
+        self.user = [User currentUser];
+    }
+    
     self.isUpdating = NO;
     self.isPaginating = NO;
     
@@ -149,7 +153,7 @@ static NSInteger const ResultCount = 20;
 - (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonID {
     switch(buttonID)
     {
-        case ButtongIDUserProfile:
+        case ButtonIDUserProfile:
         {
             [cell animateProfileTapNoOp];
             break;

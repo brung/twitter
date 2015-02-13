@@ -30,8 +30,9 @@
     self.profileImage.clipsToBounds = YES;
     UIGestureRecognizer *singleTapImage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onUserProfileTap)];
     [self.profileImage addGestureRecognizer:singleTapImage];
-    [self.profileImage setMultipleTouchEnabled:YES];
     [self.profileImage setUserInteractionEnabled:YES];
+    [self.profileImage setMultipleTouchEnabled:YES];
+    	
     [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon"] forState:UIControlStateNormal];
     [self.retweetButton setImage:[UIImage imageNamed:@"retweetIcon_on"] forState:UIControlStateSelected];
     [self.favoriteButton setImage:[UIImage imageNamed:@"favoriteIcon"] forState:UIControlStateNormal];
@@ -73,7 +74,8 @@
 }
 
 - (void)onUserProfileTap {
-    [self.delegate tweetCell:self didPressButton:ButtongIDUserProfile];
+    NSLog(@"TweetCell on ProfileTap");
+    [self.delegate tweetCell:self didPressButton:ButtonIDUserProfile];
 }
 
 - (IBAction)onFavoriteTap:(id)sender {
