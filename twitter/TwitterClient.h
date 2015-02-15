@@ -27,5 +27,7 @@ extern NSString * const UserPostedNewTweet;
 - (void)retweetId:(NSString *)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)unfavoriteTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)favoriteTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)followUser:(User *)user completion:(void(^)(User *user, NSError *error))completion;
+- (void)unfollowUser:(User *)user completion:(void(^)(User *user, NSError *error))completion;
 
 @end

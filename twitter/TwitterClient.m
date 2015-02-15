@@ -7,6 +7,7 @@
 //
 
 #import "TwitterClient.h"
+#import "User.h"
 
 NSString * const kTwitterConsumerKey = @"LJrg3rFF5Dyy55iuX7n3tdAOe";
 NSString * const kTwitterConsumerSecret = @"jCGpEHF2zxoTqgq5NoNo8t11OBUv0tIBhO58dh5rfrn85J5x9B";
@@ -98,6 +99,34 @@ NSString * const UserPostedNewTweet = @"UserPostedNewTweet";
     }];
 }
 
+- (void)followUser:(User *)user completion:(void(^)(User *user, NSError *error))completion {
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:user.screename forKey:@"screen_name"];
+    [params setObject:@"true" forKey:@"follow"];
+    [self POST:@"1.1/friendships/create.json" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        // No op.  All data passed in parasms
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Friended user %@", responseObject);
+        User *returnUser = [[User alloc] initWithDictionary:responseObject];
+        completion(returnUser, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)unfollowUser:(User *)user completion:(void(^)(User *user, NSError *error))completion {
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:user.screename forKey:@"screen_name"];
+    [self POST:@"1.1/friendships/destroy.json" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        // No op.  All data passed in parasms
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"UnFriended user %@", responseObject);
+        User *returnUser = [[User alloc] initWithDictionary:responseObject];
+        completion(returnUser, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completion(nil, error);
+    }];
+}
 
 - (void)updateTweetWithParameters:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
     //https://dev.twitter.com/rest/reference/post/statuses/update

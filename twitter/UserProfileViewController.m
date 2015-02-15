@@ -40,6 +40,7 @@
     [self.bgImage setImageWithURL:[NSURL URLWithString:self.user.backgroundImageUrl]];
     [self.bgImage clipsToBounds];
     [self.profileImage setImageWithURL:[NSURL URLWithString:self.user.profileImageUrl]];
+    [self setFollowButtonLabel];
     
     if (self.user == [User currentUser]) {
         self.followButton.hidden = YES;
@@ -59,7 +60,7 @@
     [self.tableView willMoveToParentViewController:self];
     [self addChildViewController:self.tableView];
     [self.contentView addSubview:self.tableView.view];
-
+    
     
 }
 
@@ -84,6 +85,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) setFollowButtonLabel {
+    if (self.user.following) {
+        self.followButton.titleLabel.text = @"Unfollow";
+    } else {
+        self.followButton.titleLabel.text = @"Follow";
+    }
+}
+
+- (IBAction)onFollowButtonTap:(id)sender {
+    if (self.user.following) {
+        [[TwitterClient sharedInstance] unfollowUser:self.user completion:^(User *user, NSError *error) {
+            self.user = user;
+            [self setFollowButtonLabel];
+        }];
+    } else {
+        [[TwitterClient sharedInstance] followUser:self.user completion:^(User *user, NSError *error) {
+            self.user = user;
+            [self setFollowButtonLabel];
+        }];
+        
+    }
+}
 
 - (IBAction)onSegmentControlTap:(id)sender {
     

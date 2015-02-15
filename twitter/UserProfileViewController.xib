@@ -38,6 +38,7 @@
                         <segment title="Tweets"/>
                         <segment title="Mentions"/>
                     </segments>
+                    <color key="tintColor" red="0.37641132900000002" green="0.69211898819999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="onSegmentControlTap:" destination="-1" eventType="valueChanged" id="fP4-f0-dwQ"/>
                     </connections>
@@ -50,15 +51,18 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPY-CH-crt">
-                    <rect key="frame" x="511" y="108" width="80" height="30"/>
+                    <rect key="frame" x="491" y="108" width="100" height="30"/>
                     <color key="backgroundColor" red="0.37641132904113217" green="0.6921189881602694" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="80" id="9ds-Ky-mcU"/>
+                        <constraint firstAttribute="width" constant="100" id="9ds-Ky-mcU"/>
                     </constraints>
-                    <state key="normal" title="Follow">
+                    <state key="normal" title="Unfollow">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="onFollowButtonTap:" destination="-1" eventType="touchUpInside" id="wzy-Tm-4B9"/>
+                    </connections>
                 </button>
                 <view contentMode="scaleToFill" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="KQl-DX-6kG">
                     <rect key="frame" x="0.0" y="324" width="600" height="276"/>

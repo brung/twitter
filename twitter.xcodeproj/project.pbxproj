@@ -10,10 +10,6 @@
 		B1EF87618AA77A5610A097F6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F44C05A9559A679FB0281C4A /* libPods.a */; };
 		B81979911A86D11F00F0A399 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B819798F1A86D11F00F0A399 /* ComposeViewController.m */; };
 		B81979921A86D11F00F0A399 /* ComposeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B81979901A86D11F00F0A399 /* ComposeViewController.xib */; };
-		B87BDAB71A8B1A2800A2A1BB /* UserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B87BDAB51A8B1A2800A2A1BB /* UserDetailViewController.m */; };
-		B87BDAB81A8B1A2800A2A1BB /* UserDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B87BDAB61A8B1A2800A2A1BB /* UserDetailViewController.xib */; };
-		B87BDABC1A8B1D8900A2A1BB /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B87BDABA1A8B1D8900A2A1BB /* UserCell.m */; };
-		B87BDABD1A8B1D8900A2A1BB /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B87BDABB1A8B1D8900A2A1BB /* UserCell.xib */; };
 		B87BDAC11A8BD77400A2A1BB /* SideNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B87BDABF1A8BD77400A2A1BB /* SideNavViewController.m */; };
 		B87BDAC21A8BD77400A2A1BB /* SideNavViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B87BDAC01A8BD77400A2A1BB /* SideNavViewController.xib */; };
 		B87BDAC61A8BD9A000A2A1BB /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B87BDAC41A8BD9A000A2A1BB /* MenuCell.m */; };
@@ -57,12 +53,6 @@
 		B819798E1A86D11F00F0A399 /* ComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		B819798F1A86D11F00F0A399 /* ComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		B81979901A86D11F00F0A399 /* ComposeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComposeViewController.xib; sourceTree = "<group>"; };
-		B87BDAB41A8B1A2800A2A1BB /* UserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailViewController.h; sourceTree = "<group>"; };
-		B87BDAB51A8B1A2800A2A1BB /* UserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailViewController.m; sourceTree = "<group>"; };
-		B87BDAB61A8B1A2800A2A1BB /* UserDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailViewController.xib; sourceTree = "<group>"; };
-		B87BDAB91A8B1D8900A2A1BB /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
-		B87BDABA1A8B1D8900A2A1BB /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
-		B87BDABB1A8B1D8900A2A1BB /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		B87BDABE1A8BD77400A2A1BB /* SideNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideNavViewController.h; sourceTree = "<group>"; };
 		B87BDABF1A8BD77400A2A1BB /* SideNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideNavViewController.m; sourceTree = "<group>"; };
 		B87BDAC01A8BD77400A2A1BB /* SideNavViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideNavViewController.xib; sourceTree = "<group>"; };
@@ -222,9 +212,6 @@
 				B819798E1A86D11F00F0A399 /* ComposeViewController.h */,
 				B819798F1A86D11F00F0A399 /* ComposeViewController.m */,
 				B81979901A86D11F00F0A399 /* ComposeViewController.xib */,
-				B87BDAB41A8B1A2800A2A1BB /* UserDetailViewController.h */,
-				B87BDAB51A8B1A2800A2A1BB /* UserDetailViewController.m */,
-				B87BDAB61A8B1A2800A2A1BB /* UserDetailViewController.xib */,
 				B87BDABE1A8BD77400A2A1BB /* SideNavViewController.h */,
 				B87BDABF1A8BD77400A2A1BB /* SideNavViewController.m */,
 				B87BDAC01A8BD77400A2A1BB /* SideNavViewController.xib */,
@@ -257,9 +244,6 @@
 				B8E329551A8488AD00327AE0 /* TweetCell.h */,
 				B8E329561A8488AD00327AE0 /* TweetCell.m */,
 				B8E329571A8488AD00327AE0 /* TweetCell.xib */,
-				B87BDAB91A8B1D8900A2A1BB /* UserCell.h */,
-				B87BDABA1A8B1D8900A2A1BB /* UserCell.m */,
-				B87BDABB1A8B1D8900A2A1BB /* UserCell.xib */,
 				B87BDAC31A8BD9A000A2A1BB /* MenuCell.h */,
 				B87BDAC41A8BD9A000A2A1BB /* MenuCell.m */,
 				B87BDAC51A8BD9A000A2A1BB /* MenuCell.xib */,
@@ -356,10 +340,8 @@
 				B81979921A86D11F00F0A399 /* ComposeViewController.xib in Resources */,
 				B88452031A8FE65C00CDDDF6 /* UserProfileViewController.xib in Resources */,
 				B87BDAC71A8BD9A000A2A1BB /* MenuCell.xib in Resources */,
-				B87BDABD1A8B1D8900A2A1BB /* UserCell.xib in Resources */,
 				B8B441CA1A81C03300D8969F /* LaunchScreen.xib in Resources */,
 				B884520D1A9022C000CDDDF6 /* UserDetailsViewController.xib in Resources */,
-				B87BDAB81A8B1A2800A2A1BB /* UserDetailViewController.xib in Resources */,
 				B8B441C71A81C03300D8969F /* Images.xcassets in Resources */,
 				B87BDAC21A8BD77400A2A1BB /* SideNavViewController.xib in Resources */,
 			);
@@ -416,9 +398,7 @@
 				B8B441BF1A81C03300D8969F /* AppDelegate.m in Sources */,
 				B87BDAC11A8BD77400A2A1BB /* SideNavViewController.m in Sources */,
 				B8E329481A83292D00327AE0 /* User.m in Sources */,
-				B87BDAB71A8B1A2800A2A1BB /* UserDetailViewController.m in Sources */,
 				B88452021A8FE65C00CDDDF6 /* UserProfileViewController.m in Sources */,
-				B87BDABC1A8B1D8900A2A1BB /* UserCell.m in Sources */,
 				B81979911A86D11F00F0A399 /* ComposeViewController.m in Sources */,
 				B884520C1A9022C000CDDDF6 /* UserDetailsViewController.m in Sources */,
 				B8E3294B1A83293900327AE0 /* Tweet.m in Sources */,
