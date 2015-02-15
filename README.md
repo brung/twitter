@@ -1,7 +1,7 @@
 ## Twitter 
 Week 2 of the twitter app.
 
-Time spent: `8.5`
+Time spent: `13`
 
 ### Feaures
 

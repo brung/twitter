@@ -58,12 +58,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
-                    <connections>
-                        <outletCollection property="gestureRecognizers" destination="hck-HJ-VNO" appends="YES" id="31d-tm-2AW"/>
-                    </connections>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="ohZ-tQ-JgZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="36s-dg-xQK"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tcy-aP-URi" secondAttribute="trailing" constant="8" id="8O7-4d-SMf"/>
@@ -94,11 +92,14 @@
                     <exclude reference="xPp-am-PDX"/>
                 </mask>
             </variation>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="UdJ-yk-i4F" appends="YES" id="PMq-HR-dhN"/>
+            </connections>
             <point key="canvasLocation" x="137" y="160"/>
         </view>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="hck-HJ-VNO">
+        <panGestureRecognizer minimumNumberOfTouches="1" id="UdJ-yk-i4F">
             <connections>
-                <action selector="onViewSwipe:" destination="-1" id="3lD-8W-Gt8"/>
+                <action selector="onViewSwipe:" destination="-1" id="FpS-K2-Vmf"/>
             </connections>
         </panGestureRecognizer>
     </objects>

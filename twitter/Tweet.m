@@ -71,7 +71,7 @@
         [params setValue:@"true" forKey:@"exclude_replies"];
         [params setValue:@"true" forKey:@"include_rts"];
         [params setValue:[User currentUser].screename forKey:@"screen_name"];
-        [[TwitterClient sharedInstance] getUserTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
+        [[TwitterClient sharedInstance] userTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
             if (!error) {
                 for (Tweet *tweet in tweets) {
                     NSLog(@"Looking to delete retweet of %@", self.tweetId);

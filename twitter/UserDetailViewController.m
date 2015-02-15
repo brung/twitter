@@ -209,7 +209,7 @@ static NSInteger const ResultCount = 20;
             long long oldestId = [oldestTweet.tweetId longLongValue]-1;
             [params setObject:@(oldestId) forKey:@"max_id"];
         }
-        [[TwitterClient sharedInstance] getUserTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
+        [[TwitterClient sharedInstance] userTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
             if (!error) {
                 if (self.isPaginating) {
                     NSMutableArray *allTweets = [NSMutableArray arrayWithArray:self.tweets];

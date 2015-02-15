@@ -9,16 +9,21 @@
 #import "TweetsViewController.h"
 #import "TweetDetailViewController.h"
 #import "ComposeViewController.h"
-#import "UserDetailViewController.h"
+//#import "UserDetailViewController.h"
+#import "UserProfileViewController.h"
 #import "TwitterClient.h"
 #import "User.h"
 #import "Tweet.h"
 #import "TweetCell.h"
 
 static NSInteger const ResultCount = 20;
+NSInteger const ViewHome = 0;
+NSInteger const ViewUser = 1;
+NSInteger const ViewMentions = 2;
 
 @interface TweetsViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, TweetCellDelegate, TweetDetailViewControllerDelegate>
 @property (nonatomic, strong) NSArray *tweets;
+@property (weak, nonatomic) IBOutlet UILabel *noTweetsLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) TweetCell *prototypeCell;
@@ -45,6 +50,9 @@ NSString * const TweetCellNibName = @"TweetCell";
     self.isUpdating = NO;
     self.isPaginating = NO;
     self.isInsertingNewPost = NO;
+    if (!self.user) {
+        self.user = [User currentUser];
+    }
     
     self.title = @"Home";
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLeftButton)];
@@ -60,8 +68,10 @@ NSString * const TweetCellNibName = @"TweetCell";
     [self.tableView registerNib:[UINib nibWithNibName:TweetCellNibName bundle:nil] forCellReuseIdentifier:TweetCellNibName];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventValueChanged];
-    [self.tableView insertSubview:self.refreshControl atIndex:0];
+    if (self.currentView == ViewHome) {
+        [self.refreshControl addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventValueChanged];
+        [self.tableView insertSubview:self.refreshControl atIndex:0];
+    }
     
     UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 50)];
     UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -97,7 +107,7 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == self.tweets.count-1) {
+    if (indexPath.row == self.tweets.count-1 && self.tweets.count >= ResultCount) {
         self.isPaginating = YES;
         [self fetchTweets];
     }
@@ -116,6 +126,7 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"didSelectRow");
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     TweetDetailViewController *vc = [[TweetDetailViewController alloc] init];
     vc.tweet = self.tweets[indexPath.row];
@@ -140,9 +151,7 @@ NSString * const TweetCellNibName = @"TweetCell";
     {
         case ButtonIDUserProfile:
         {
-            UserDetailViewController *vc = [[UserDetailViewController alloc] init];
-            vc.user = cell.tweet.user;
-            [self.navigationController presentViewController:vc animated:YES completion:nil];
+            [self.delegate tweetsViewController:self selectedUser:cell.tweet.user];
             break;
         }
         case ButtonIDReply:
@@ -211,29 +220,81 @@ NSString * const TweetCellNibName = @"TweetCell";
             long long oldestId = [oldestTweet.tweetId longLongValue]-1;
             [params setObject:@(oldestId) forKey:@"max_id"];
         }
-        [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
-            [self.refreshControl endRefreshing];
-            if (!error) {
-                if (self.isPaginating) {
-                    NSMutableArray *allTweets = [NSMutableArray arrayWithArray:self.tweets];
-                    [allTweets addObjectsFromArray:tweets];
-                    self.tweets = [allTweets copy];
-                } else {
-                    self.tweets = tweets;
-                }
-                [self.tableView reloadData];
-                self.isUpdating = NO;
-                self.isPaginating = NO;
-            } else {
-                NSLog(@"Got an error retrieving tweets: %@", error);
-                [[[UIAlertView alloc] initWithTitle:@"Network error" message:@"Unable to retrieve tweets" delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:nil] show];
-                self.isUpdating = NO;
-                self.isPaginating = NO;
+        switch (self.currentView ) {
+            default:
+            case ViewHome:
+            {
+                [self fetchHomeTimelineWithParams:params];
+                break;
             }
-        }];
+            case ViewUser:
+            {
+                [self fetchUserTimelineWithParams:params];
+                break;
+            }
+            case ViewMentions:
+            {
+                [self fetchMentionsTimelineWithParams:params];
+                break;
+            }
+        }
     } else {
         NSLog(@"Not fetching data as another call is already running");
     }
+}
+
+- (void)handleFetchResultsTweets:(NSArray *)tweets orError:(NSError *)error {
+    [self.refreshControl endRefreshing];
+    if (!error) {
+        if (self.isPaginating) {
+            NSMutableArray *allTweets = [NSMutableArray arrayWithArray:self.tweets];
+            [allTweets addObjectsFromArray:tweets];
+            self.tweets = [allTweets copy];
+        } else {
+            self.tweets = tweets;
+        }
+        if (tweets.count < ResultCount) {
+            self.tableView.tableFooterView.hidden = YES;
+        }
+        if (tweets.count > 0) {
+            self.noTweetsLabel.hidden = YES;
+            self.tableView.hidden = NO;
+        } else {
+            self.noTweetsLabel.hidden = NO;
+            self.tableView.hidden = YES;
+        }
+        [self.tableView reloadData];
+        
+        self.isUpdating = NO;
+        self.isPaginating = NO;
+    } else {
+        NSLog(@"Got an error retrieving tweets: %@", error);
+        [[[UIAlertView alloc] initWithTitle:@"Network error" message:@"Unable to retrieve tweets" delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:nil] show];
+        self.isUpdating = NO;
+        self.isPaginating = NO;
+    }
+}
+
+- (void) fetchHomeTimelineWithParams:(NSMutableDictionary *)params {
+    NSLog(@"Fetching homeTimeline");
+    [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
+        [self handleFetchResultsTweets:tweets orError:error];
+    }];
+}
+
+- (void)fetchUserTimelineWithParams:(NSMutableDictionary *)params {
+    NSLog(@"Fetching usertimeline");
+    [params setObject:self.user.screename forKey:@"screen_name"];
+    [[TwitterClient sharedInstance] userTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
+        [self handleFetchResultsTweets:tweets orError:error];
+    }];
+}
+
+- (void)fetchMentionsTimelineWithParams:(NSMutableDictionary *)params {
+    NSLog(@"Fetching mentionsTimeline");
+    [[TwitterClient sharedInstance] mentionsTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
+        [self handleFetchResultsTweets:tweets orError:error];
+    }];
 }
 
 - (void)onRefresh {

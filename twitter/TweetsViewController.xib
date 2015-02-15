@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetsViewController">
             <connections>
+                <outlet property="noTweetsLabel" destination="8Zc-Yi-EKh" id="Iwb-es-Afz"/>
                 <outlet property="tableView" destination="Oyf-Zp-53B" id="xeh-lK-udD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -19,14 +20,42 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No status updates found at this time." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Yi-EKh">
+                    <rect key="frame" x="8" y="8" width="584" height="584"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="8Zc-Yi-EKh" secondAttribute="trailing" constant="8" id="8IF-8Y-XoL"/>
+                <constraint firstAttribute="centerX" secondItem="8Zc-Yi-EKh" secondAttribute="centerX" id="8oP-YP-Adz"/>
+                <constraint firstItem="8Zc-Yi-EKh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="9My-eA-vC9"/>
                 <constraint firstItem="Oyf-Zp-53B" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="DnR-yh-Lr2"/>
+                <constraint firstItem="8Zc-Yi-EKh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="W1Z-0l-xvX"/>
+                <constraint firstAttribute="trailing" secondItem="8Zc-Yi-EKh" secondAttribute="trailing" constant="8" id="Wqp-k4-8up"/>
                 <constraint firstAttribute="trailing" secondItem="Oyf-Zp-53B" secondAttribute="trailing" id="Zhi-ra-1Sb"/>
+                <constraint firstItem="8Zc-Yi-EKh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="dzr-Rp-g7O"/>
                 <constraint firstAttribute="bottom" secondItem="Oyf-Zp-53B" secondAttribute="bottom" id="g9C-0w-sFz"/>
+                <constraint firstAttribute="centerY" secondItem="8Zc-Yi-EKh" secondAttribute="centerY" id="gq0-bD-wFo"/>
                 <constraint firstItem="Oyf-Zp-53B" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oby-XU-kKe"/>
+                <constraint firstAttribute="trailing" secondItem="8Zc-Yi-EKh" secondAttribute="trailing" constant="8" id="pKM-8n-Kal"/>
+                <constraint firstItem="8Zc-Yi-EKh" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="qlL-be-gjP"/>
+                <constraint firstAttribute="bottom" secondItem="8Zc-Yi-EKh" secondAttribute="bottom" constant="8" id="ui4-5W-6PN"/>
+                <constraint firstItem="8Zc-Yi-EKh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="xQ1-HR-JCH"/>
+                <constraint firstItem="8Zc-Yi-EKh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="ys3-53-gJg"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="8IF-8Y-XoL"/>
+                    <exclude reference="9My-eA-vC9"/>
+                    <exclude reference="W1Z-0l-xvX"/>
+                    <exclude reference="pKM-8n-Kal"/>
+                    <exclude reference="qlL-be-gjP"/>
+                    <exclude reference="xQ1-HR-JCH"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="383" y="287"/>
         </view>
     </objects>

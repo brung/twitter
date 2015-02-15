@@ -19,6 +19,10 @@
 		B87BDAC61A8BD9A000A2A1BB /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B87BDAC41A8BD9A000A2A1BB /* MenuCell.m */; };
 		B87BDAC71A8BD9A000A2A1BB /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B87BDAC51A8BD9A000A2A1BB /* MenuCell.xib */; };
 		B87BDACA1A8BDB2E00A2A1BB /* MenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B87BDAC91A8BDB2E00A2A1BB /* MenuItem.m */; };
+		B88452021A8FE65C00CDDDF6 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B88452001A8FE65C00CDDDF6 /* UserProfileViewController.m */; };
+		B88452031A8FE65C00CDDDF6 /* UserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B88452011A8FE65C00CDDDF6 /* UserProfileViewController.xib */; };
+		B884520C1A9022C000CDDDF6 /* UserDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B884520A1A9022C000CDDDF6 /* UserDetailsViewController.m */; };
+		B884520D1A9022C000CDDDF6 /* UserDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B884520B1A9022C000CDDDF6 /* UserDetailsViewController.xib */; };
 		B8B441BC1A81C03300D8969F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B441BB1A81C03300D8969F /* main.m */; };
 		B8B441BF1A81C03300D8969F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B441BE1A81C03300D8969F /* AppDelegate.m */; };
 		B8B441C71A81C03300D8969F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B441C61A81C03300D8969F /* Images.xcassets */; };
@@ -67,6 +71,12 @@
 		B87BDAC51A8BD9A000A2A1BB /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		B87BDAC81A8BDB2E00A2A1BB /* MenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItem.h; sourceTree = "<group>"; };
 		B87BDAC91A8BDB2E00A2A1BB /* MenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItem.m; sourceTree = "<group>"; };
+		B88451FF1A8FE65C00CDDDF6 /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
+		B88452001A8FE65C00CDDDF6 /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
+		B88452011A8FE65C00CDDDF6 /* UserProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserProfileViewController.xib; sourceTree = "<group>"; };
+		B88452091A9022C000CDDDF6 /* UserDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailsViewController.h; sourceTree = "<group>"; };
+		B884520A1A9022C000CDDDF6 /* UserDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailsViewController.m; sourceTree = "<group>"; };
+		B884520B1A9022C000CDDDF6 /* UserDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailsViewController.xib; sourceTree = "<group>"; };
 		B8B441B61A81C03300D8969F /* twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B441BA1A81C03300D8969F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8B441BB1A81C03300D8969F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -218,6 +228,12 @@
 				B87BDABE1A8BD77400A2A1BB /* SideNavViewController.h */,
 				B87BDABF1A8BD77400A2A1BB /* SideNavViewController.m */,
 				B87BDAC01A8BD77400A2A1BB /* SideNavViewController.xib */,
+				B88451FF1A8FE65C00CDDDF6 /* UserProfileViewController.h */,
+				B88452001A8FE65C00CDDDF6 /* UserProfileViewController.m */,
+				B88452011A8FE65C00CDDDF6 /* UserProfileViewController.xib */,
+				B88452091A9022C000CDDDF6 /* UserDetailsViewController.h */,
+				B884520A1A9022C000CDDDF6 /* UserDetailsViewController.m */,
+				B884520B1A9022C000CDDDF6 /* UserDetailsViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -338,9 +354,11 @@
 				B8E329591A8488AD00327AE0 /* TweetCell.xib in Resources */,
 				B8E329501A83330100327AE0 /* TweetsViewController.xib in Resources */,
 				B81979921A86D11F00F0A399 /* ComposeViewController.xib in Resources */,
+				B88452031A8FE65C00CDDDF6 /* UserProfileViewController.xib in Resources */,
 				B87BDAC71A8BD9A000A2A1BB /* MenuCell.xib in Resources */,
 				B87BDABD1A8B1D8900A2A1BB /* UserCell.xib in Resources */,
 				B8B441CA1A81C03300D8969F /* LaunchScreen.xib in Resources */,
+				B884520D1A9022C000CDDDF6 /* UserDetailsViewController.xib in Resources */,
 				B87BDAB81A8B1A2800A2A1BB /* UserDetailViewController.xib in Resources */,
 				B8B441C71A81C03300D8969F /* Images.xcassets in Resources */,
 				B87BDAC21A8BD77400A2A1BB /* SideNavViewController.xib in Resources */,
@@ -399,8 +417,10 @@
 				B87BDAC11A8BD77400A2A1BB /* SideNavViewController.m in Sources */,
 				B8E329481A83292D00327AE0 /* User.m in Sources */,
 				B87BDAB71A8B1A2800A2A1BB /* UserDetailViewController.m in Sources */,
+				B88452021A8FE65C00CDDDF6 /* UserProfileViewController.m in Sources */,
 				B87BDABC1A8B1D8900A2A1BB /* UserCell.m in Sources */,
 				B81979911A86D11F00F0A399 /* ComposeViewController.m in Sources */,
+				B884520C1A9022C000CDDDF6 /* UserDetailsViewController.m in Sources */,
 				B8E3294B1A83293900327AE0 /* Tweet.m in Sources */,
 				B87BDAC61A8BD9A000A2A1BB /* MenuCell.m in Sources */,
 				B87BDACA1A8BDB2E00A2A1BB /* MenuItem.m in Sources */,

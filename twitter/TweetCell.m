@@ -74,7 +74,6 @@
 }
 
 - (void)onUserProfileTap {
-    NSLog(@"TweetCell on ProfileTap");
     [self.delegate tweetCell:self didPressButton:ButtonIDUserProfile];
 }
 

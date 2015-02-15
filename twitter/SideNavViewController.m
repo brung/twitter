@@ -8,14 +8,14 @@
 
 #import "SideNavViewController.h"
 #import "TweetsViewController.h"
-#import "UserDetailViewController.h"
+#import "UserProfileViewController.h"
 #import "MenuCell.h"
 #import "User.h"
 #import "UIImageView+AFNetworking.h"
 
 NSString * const MenuCellNib = @"MenuCell";
 
-@interface SideNavViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SideNavViewController () <UITableViewDataSource, UITableViewDelegate, TweetsViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -52,13 +52,11 @@ NSString * const MenuCellNib = @"MenuCell";
     [self.tableView registerNib:[UINib nibWithNibName:MenuCellNib bundle:nil] forCellReuseIdentifier:MenuCellNib];
     [self.tableView reloadData];
     
-    //User Details
-    UserDetailViewController *uvc = [[UserDetailViewController alloc] init];
-    uvc.view.frame = self.view.frame;
-    [vcItems addObject:uvc];
-    
     //Tweets
     TweetsViewController *tvc = [[TweetsViewController alloc] init];
+    tvc.user = currentUser;
+    tvc.currentView = ViewHome;
+    tvc.delegate = self;
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
     // Modally present tweents view
     UINavigationBar *navbar = nvc.navigationBar;
@@ -71,17 +69,28 @@ NSString * const MenuCellNib = @"MenuCell";
                                     NSForegroundColorAttributeName,
                                     nil]];
     nvc.view.frame = self.view.frame;
-
     [vcItems addObject:nvc];
+
+    //User Details
+    UserProfileViewController *uvc = [[UserProfileViewController alloc] init];
+    uvc.view.frame = self.view.frame;
+    uvc.user = currentUser;
+    uvc.currentView = ViewUser;
+    [vcItems addObject:uvc];
+
+    //Mentions
+    UserProfileViewController *mentionsvc = [[UserProfileViewController alloc] init];
+    mentionsvc.view.frame = self.view.frame;
+    mentionsvc.user = currentUser;
+    mentionsvc.currentView = ViewMentions;
+    [vcItems addObject:mentionsvc];
+    
+    self.viewControllers = vcItems;
+    self.currentView = ViewHome;
     [nvc willMoveToParentViewController:self];
     [self addChildViewController:nvc];
     [self.contentView addSubview:nvc.view];
     
-    //Mentions
-    [vcItems addObject:nvc];
-    
-    self.viewControllers = vcItems;
-    self.currentView = 1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -125,6 +134,7 @@ NSString * const MenuCellNib = @"MenuCell";
     [self addChildViewController:vc];
     vc.view.frame = self.view.frame;
     [self.contentView addSubview:vc.view];
+    self.currentView = indexPath.row;
     
     [UIView animateWithDuration:0.4 animations:^{
         self.contentView.transform = CGAffineTransformMakeTranslation(0, 0);
@@ -142,23 +152,34 @@ NSString * const MenuCellNib = @"MenuCell";
         float newX = translation.x;
         if (translation.x < 0) {
             newX = 0;
-        } else if (translation.x > self.view.bounds.size.width) {
-            newX = self.view.bounds.size.width;
+        } else if (translation.x > self.view.bounds.size.width-60) {
+            newX = self.view.bounds.size.width-60;
         }
-        sender.view.transform = CGAffineTransformTranslate(sender.view.transform, newX, 0);
+        self.contentView.transform = CGAffineTransformTranslate(self.contentView.transform, newX, 0);
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         if (velocity.x > 0) {
             [UIView animateWithDuration:0.3 animations:^{
                 float screenWidth = self.view.bounds.size.width-60;
-                sender.view.transform = CGAffineTransformMakeTranslation(screenWidth, 0);
+                self.contentView.transform = CGAffineTransformMakeTranslation(screenWidth, 0);
             }];
         } else if (velocity.x <= 0) {
             [UIView animateWithDuration:0.3 animations:^{
-                sender.view.transform = CGAffineTransformMakeTranslation(0, 0);
+                self.contentView.transform = CGAffineTransformMakeTranslation(0, 0);
             }];
             
         }
     }
+}
+
+#pragma mark - Private methods
+- (void)tweetsViewController:(TweetsViewController *)tvc selectedUser:(User *)user {
+    UserProfileViewController *vc = [[UserProfileViewController alloc] init];
+    vc.user = user;
+    vc.currentView = ViewUser;
+    [vc willMoveToParentViewController:self];
+    [self addChildViewController:vc];
+    vc.view.frame = self.view.frame;
+    [self.contentView addSubview:vc.view];
 }
 
 /*

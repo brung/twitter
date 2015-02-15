@@ -20,8 +20,8 @@
 }
 
 + (NSArray *)getMenuItems {
-    NSArray *items = @[@{@"iconImageName" : @"twitter", @"name" : @"Profile"},
-                       @{@"iconImageName" : @"twitter", @"name" : @"Home"},
+    NSArray *items = @[@{@"iconImageName" : @"twitter", @"name" : @"Home"},
+                       @{@"iconImageName" : @"twitter", @"name" : @"Profile"},
                        @{@"iconImageName" : @"twitter", @"name" : @"Mentions"}];
     NSMutableArray *returnItems = [NSMutableArray array];
     for (NSDictionary *dict in items) {
