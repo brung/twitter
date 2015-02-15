@@ -126,7 +126,6 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"didSelectRow");
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     TweetDetailViewController *vc = [[TweetDetailViewController alloc] init];
     vc.tweet = self.tweets[indexPath.row];
@@ -276,14 +275,12 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 - (void) fetchHomeTimelineWithParams:(NSMutableDictionary *)params {
-    NSLog(@"Fetching homeTimeline");
     [[TwitterClient sharedInstance] homeTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
         [self handleFetchResultsTweets:tweets orError:error];
     }];
 }
 
 - (void)fetchUserTimelineWithParams:(NSMutableDictionary *)params {
-    NSLog(@"Fetching usertimeline");
     [params setObject:self.user.screename forKey:@"screen_name"];
     [[TwitterClient sharedInstance] userTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
         [self handleFetchResultsTweets:tweets orError:error];
@@ -291,7 +288,6 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 - (void)fetchMentionsTimelineWithParams:(NSMutableDictionary *)params {
-    NSLog(@"Fetching mentionsTimeline");
     [[TwitterClient sharedInstance] mentionsTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
         [self handleFetchResultsTweets:tweets orError:error];
     }];
