@@ -52,16 +52,6 @@
     uvc.view.frame = self.descriptionView.bounds;
     [self.descriptionView addSubview:uvc.view];
     
-    self.tableView = [[TweetsViewController alloc] init];
-    self.tableView.user = self.user;
-    self.tableView.currentView = self.currentView;
-    self.tableView.view.frame = self.contentView.bounds;
-    
-    [self.tableView willMoveToParentViewController:self];
-    [self addChildViewController:self.tableView];
-    [self.contentView addSubview:self.tableView.view];
-    
-    
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -108,10 +98,6 @@
     }
 }
 
-- (IBAction)onSegmentControlTap:(id)sender {
-    
-    
-}
 
 /*
 #pragma mark - Navigation

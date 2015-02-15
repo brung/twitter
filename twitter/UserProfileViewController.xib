@@ -32,17 +32,6 @@
                         <constraint firstAttribute="height" constant="64" id="zlx-Wd-R4n"/>
                     </constraints>
                 </imageView>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="wVQ-9s-R6g">
-                    <rect key="frame" x="230" y="288" width="141" height="29"/>
-                    <segments>
-                        <segment title="Tweets"/>
-                        <segment title="Mentions"/>
-                    </segments>
-                    <color key="tintColor" red="0.37641132900000002" green="0.69211898819999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <connections>
-                        <action selector="onSegmentControlTap:" destination="-1" eventType="valueChanged" id="fP4-f0-dwQ"/>
-                    </connections>
-                </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DQZ-Al-ban" userLabel="Description View">
                     <rect key="frame" x="8" y="180" width="584" height="100"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -65,28 +54,26 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="KQl-DX-6kG">
-                    <rect key="frame" x="0.0" y="324" width="600" height="276"/>
+                    <rect key="frame" x="0.0" y="288" width="600" height="312"/>
                     <color key="backgroundColor" red="0.94700653700000004" green="0.0086661424980000006" blue="0.074840566159999997" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="wVQ-9s-R6g" secondAttribute="centerX" id="2sH-dD-Pkx"/>
                 <constraint firstAttribute="bottom" secondItem="KQl-DX-6kG" secondAttribute="bottom" id="BNm-4m-QIj"/>
                 <constraint firstAttribute="trailing" secondItem="nPY-CH-crt" secondAttribute="trailing" constant="9" id="C9U-Bc-ZsD"/>
                 <constraint firstAttribute="trailing" secondItem="qC3-fZ-Rb9" secondAttribute="trailing" id="D0h-6I-pEa"/>
                 <constraint firstItem="DQZ-Al-ban" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="FnN-Ua-Aop"/>
                 <constraint firstItem="TUh-rn-mBI" firstAttribute="top" secondItem="qC3-fZ-Rb9" secondAttribute="bottom" constant="8" id="Ps6-ic-lkY"/>
                 <constraint firstItem="qC3-fZ-Rb9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TQi-jE-tBJ"/>
+                <constraint firstItem="KQl-DX-6kG" firstAttribute="top" secondItem="DQZ-Al-ban" secondAttribute="bottom" constant="8" id="bOZ-h6-0Xn"/>
                 <constraint firstItem="nPY-CH-crt" firstAttribute="top" secondItem="qC3-fZ-Rb9" secondAttribute="bottom" constant="8" id="bZt-OV-VlZ"/>
                 <constraint firstItem="DQZ-Al-ban" firstAttribute="top" secondItem="TUh-rn-mBI" secondAttribute="bottom" constant="8" id="daW-Zb-quK"/>
                 <constraint firstAttribute="trailing" secondItem="KQl-DX-6kG" secondAttribute="trailing" id="fBp-Fc-LST"/>
-                <constraint firstItem="KQl-DX-6kG" firstAttribute="top" secondItem="wVQ-9s-R6g" secondAttribute="bottom" constant="8" id="h26-Sz-eKX"/>
                 <constraint firstItem="TUh-rn-mBI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="hqu-bO-ZNV"/>
                 <constraint firstItem="KQl-DX-6kG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pWH-UQ-PiZ"/>
                 <constraint firstItem="qC3-fZ-Rb9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="sbX-ba-4GS"/>
-                <constraint firstItem="wVQ-9s-R6g" firstAttribute="top" secondItem="DQZ-Al-ban" secondAttribute="bottom" constant="8" id="tCh-lV-3sA"/>
                 <constraint firstAttribute="trailing" secondItem="DQZ-Al-ban" secondAttribute="trailing" constant="8" id="zHC-Gr-6sA"/>
             </constraints>
         </view>
