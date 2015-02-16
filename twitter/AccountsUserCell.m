@@ -59,7 +59,6 @@
         if (self.removeButton.isHidden) {
             self.showRemoveCenter  = CGPointMake(self.removeButton.center.x, self.removeButton.center.y);
             self.hideRemoveCenter = CGPointMake(self.removeButton.center.x+self.removeButton.frame.size.width, self.removeButton.center.y);
-            NSLog(@"setting remove Button current %f hide %f show %f", self.removeButton.center.x, self.hideRemoveCenter.x, self.showRemoveCenter.x);
             self.removeButton.center = self.hideRemoveCenter;
             [self.removeButton setHidden:NO];
         }

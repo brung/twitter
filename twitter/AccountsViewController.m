@@ -66,8 +66,10 @@ NSString * const UserCellNib = @"AccountsUserCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([User currentUser]) {
     [User setCurrentUser:self.users[indexPath.row]];
     [self presentViewController:[[SideNavViewController alloc] init] animated:YES completion:nil];
+    }
 }
 
 - (void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

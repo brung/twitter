@@ -46,12 +46,6 @@ NSString * const kAllAccountsKey = @"kAllAccounts";
     }
 }
 
-+ (void)logout {
-    [User removeUser:[User currentUser]];
-    [User setCurrentUser:nil];
-    [[TwitterClient sharedInstance].requestSerializer removeAccessToken];
-}
-
 + (NSArray *)getAllUsers {
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kAllAccountsKey];
     if (data != nil) {
@@ -93,21 +87,24 @@ NSString * const kAllAccountsKey = @"kAllAccounts";
 + (NSArray *)removeUser:(User *)user {
     NSMutableArray *array = [NSMutableArray arrayWithArray:[User getAllUsersAsDictionaries]];
     NSMutableArray *users = [NSMutableArray array];
+    NSInteger indexToRemove = 0;
     for (NSUInteger i=0; i < array.count; i++) {
         NSDictionary *userDict = array[i];
         if ([user.screename isEqualToString:userDict[@"screen_name"]]) {
-            [array removeObjectAtIndex:i];
+            indexToRemove = i;
+            if ([user.screename isEqualToString:[User currentUser].screename]) {
+                [User setCurrentUser:nil];
+                [[TwitterClient sharedInstance].requestSerializer removeAccessToken];
+            }
         } else {
             [users addObject:[[User alloc] initWithDictionary:userDict]];
         }
     }
+    [array removeObjectAtIndex:indexToRemove];
+
     NSData *data = [NSJSONSerialization dataWithJSONObject:array options:0 error:NULL];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAllAccountsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    if (user.screename == [User currentUser].screename) {
-        [User logout];
-    }
     
     return users;
 }
