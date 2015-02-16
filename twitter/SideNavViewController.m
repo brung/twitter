@@ -172,18 +172,6 @@ NSString * const MenuCellNib = @"MenuCell";
 }
 - (IBAction)onLongPress:(UILongPressGestureRecognizer *)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:UserSwitchingAccounts object:nil];
-//    AccountsViewController *vc = [[AccountsViewController alloc] init];
-//    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
-//    UINavigationBar *navbar = nvc.navigationBar;
-//    [navbar setBarTintColor:[UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1]];
-//    navbar.tintColor = [UIColor whiteColor];
-//    [navbar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-//                                    [UIColor whiteColor],
-//                                    NSForegroundColorAttributeName,
-//                                    [UIColor whiteColor],
-//                                    NSForegroundColorAttributeName,
-//                                    nil]];
-    //[self presentViewController:nvc animated:YES completion:nil];
 }
 
 #pragma mark - Private methods
