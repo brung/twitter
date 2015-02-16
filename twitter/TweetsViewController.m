@@ -148,7 +148,6 @@ NSString * const UserCellNibName = @"UserCell";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.currentView == ViewUser || self.currentView == ViewMentions) {
-        NSLog(@"scroll blah %f", self.tableView.contentOffset.y);
     if (self.tableView.contentOffset.y < 0) {
         float offsetY = self.tableView.contentOffset.y;
         CGRect tblFrame = self.tableView.tableHeaderView.frame;
@@ -238,7 +237,6 @@ NSString * const UserCellNibName = @"UserCell";
 
 #pragma mark - TweetCellDelegate
 - (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonID {
-    NSLog(@"In TweetsViewController didPressButton %ld", (long)buttonID  );
     switch(buttonID)
     {
         case ButtonIDUserProfile:
@@ -261,7 +259,6 @@ NSString * const UserCellNibName = @"UserCell";
 
 - (void) tweetCell:(TweetCell *)cell didChangeFavoritedStatus:(BOOL)favorited {
     cell.tweet.favorited = favorited;
-    NSLog(@"changing favorite to %@", favorited ? @"YES" : @"NO");
     [self.tableView reloadData];
     [self updateTweetAtIndexPath:[self.tableView indexPathForCell:cell]];
 }

@@ -80,7 +80,6 @@
 #pragma mark - TweetDelegate methods
 - (void) tweet:(Tweet *)tweet didChangeFavorited:(BOOL)favorited {
     self.tweet = tweet;
-    NSLog(@"Setting %@ to %@", self.tweet.favorited ? @"YES" : @"NO", favorited ? @"YES": @"NO");
     [self updateStatusContents];
     [self.delegate tweetDetailViewController:self didChangeFavorited:favorited];
 }

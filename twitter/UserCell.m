@@ -47,7 +47,10 @@
 }
 
 - (void)displayFollowButton {
-    if (self.user.following) {
+    if (self.user == [User currentUser]) {
+        self.followingButton.hidden = YES;
+        self.followButton.hidden = YES;
+    } else if (self.user.following) {
         self.followingButton.hidden = NO;
         self.followButton.hidden = YES;
     } else {
