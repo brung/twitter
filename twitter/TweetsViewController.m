@@ -209,7 +209,7 @@ NSString * const UserCellNibName = @"UserCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ((self.currentView == ViewUser || self.currentView == ViewMentions)
         && indexPath.section == 0) {
-        return 172.5;
+        return 200;
     }
     [self configureCell:self.prototypeCell forRowAtIndexPath:indexPath];
     [self.prototypeCell layoutIfNeeded];

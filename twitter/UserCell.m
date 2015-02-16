@@ -8,11 +8,13 @@
 
 #import "UserCell.h"
 #import "UserDetailsViewController.h"
+#import "UserTaglineViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "TwitterClient.h"
 
-@interface UserCell()
-@property (weak, nonatomic) IBOutlet UIView *userDetailsView;
+@interface UserCell() <UIScrollViewDelegate>
+@property (weak, nonatomic) IBOutlet UIPageControl *userInfoPaging;
+@property (weak, nonatomic) IBOutlet UIScrollView *userInfoView;
 @property (weak, nonatomic) IBOutlet UIView *followingButton;
 @property (weak, nonatomic) IBOutlet UIView *followButton;
 @property (nonatomic, strong) UITapGestureRecognizer *followingButtonTap;
@@ -28,6 +30,7 @@
     self.followButtonTap.delegate = self;
     self.followingButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onFollowingTap:)];
     self.followingButtonTap.delegate = self;
+    self.userInfoView.delegate = self;
 }
 
 - (void)layoutSubviews {
@@ -59,10 +62,20 @@
     [self displayFollowButton];
     UserDetailsViewController *vc = [[UserDetailsViewController alloc] init];
     vc.user = self.user;
-    vc.view.frame = self.userDetailsView.bounds;
+    
+    
+    vc.view.frame = self.userInfoView.bounds;
     //    [vc willMoveToParentViewController:self];
     //    [vc didMoveToParentViewController:self];
-    [self.userDetailsView addSubview:vc.view];
+    [self.userInfoView addSubview:vc.view];
+    
+    
+    CGRect frame = CGRectMake(self.userInfoView.bounds.size.width, 0, self.userInfoView.bounds.size.width, self.userInfoView.bounds.size.height);
+    UserTaglineViewController *tvc = [[UserTaglineViewController alloc] init];
+    tvc.labelText = self.user.tagline;
+    tvc.view.frame = frame;
+    [self.userInfoView addSubview:tvc.view];
+    self.userInfoView.contentSize = CGSizeMake(2*self.userInfoView.frame.size.width, self.userInfoView.frame.size.height);
 
 }
 
@@ -86,6 +99,12 @@
     }];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+    // Update the page when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = self.userInfoView.frame.size.width;
+    int page = floor((self.userInfoView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    self.userInfoPaging.currentPage = page;
+}
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

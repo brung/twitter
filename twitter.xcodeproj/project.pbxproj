@@ -32,6 +32,8 @@
 		B8B441C71A81C03300D8969F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B441C61A81C03300D8969F /* Images.xcassets */; };
 		B8B441CA1A81C03300D8969F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B441C81A81C03300D8969F /* LaunchScreen.xib */; };
 		B8B441D61A81C03300D8969F /* twitterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B441D51A81C03300D8969F /* twitterTests.m */; };
+		B8C291A41A9283BB000F2143 /* UserTaglineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C291A21A9283BB000F2143 /* UserTaglineViewController.m */; };
+		B8C291A51A9283BB000F2143 /* UserTaglineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8C291A31A9283BB000F2143 /* UserTaglineViewController.xib */; };
 		B8D786361A84987E00787EFE /* TweetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D786341A84987E00787EFE /* TweetDetailViewController.m */; };
 		B8D786371A84987E00787EFE /* TweetDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8D786351A84987E00787EFE /* TweetDetailViewController.xib */; };
 		B8E329431A81E2A600327AE0 /* TwitterClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B8E329421A81E2A600327AE0 /* TwitterClient.m */; };
@@ -95,6 +97,9 @@
 		B8B441CF1A81C03300D8969F /* twitterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = twitterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B441D41A81C03300D8969F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8B441D51A81C03300D8969F /* twitterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = twitterTests.m; sourceTree = "<group>"; };
+		B8C291A11A9283BB000F2143 /* UserTaglineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTaglineViewController.h; sourceTree = "<group>"; };
+		B8C291A21A9283BB000F2143 /* UserTaglineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTaglineViewController.m; sourceTree = "<group>"; };
+		B8C291A31A9283BB000F2143 /* UserTaglineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTaglineViewController.xib; sourceTree = "<group>"; };
 		B8D786331A84987E00787EFE /* TweetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailViewController.h; sourceTree = "<group>"; };
 		B8D786341A84987E00787EFE /* TweetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailViewController.m; sourceTree = "<group>"; };
 		B8D786351A84987E00787EFE /* TweetDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetDetailViewController.xib; sourceTree = "<group>"; };
@@ -236,6 +241,9 @@
 				B88452381A91470C00CDDDF6 /* AccountsViewController.h */,
 				B88452391A91470C00CDDDF6 /* AccountsViewController.m */,
 				B884523A1A91470C00CDDDF6 /* AccountsViewController.xib */,
+				B8C291A11A9283BB000F2143 /* UserTaglineViewController.h */,
+				B8C291A21A9283BB000F2143 /* UserTaglineViewController.m */,
+				B8C291A31A9283BB000F2143 /* UserTaglineViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -361,6 +369,7 @@
 				B8D786371A84987E00787EFE /* TweetDetailViewController.xib in Resources */,
 				B8E329591A8488AD00327AE0 /* TweetCell.xib in Resources */,
 				B88452411A9150BE00CDDDF6 /* AccountsUserCell.xib in Resources */,
+				B8C291A51A9283BB000F2143 /* UserTaglineViewController.xib in Resources */,
 				B8E329501A83330100327AE0 /* TweetsViewController.xib in Resources */,
 				B81979921A86D11F00F0A399 /* ComposeViewController.xib in Resources */,
 				B87BDAC71A8BD9A000A2A1BB /* MenuCell.xib in Resources */,
@@ -435,6 +444,7 @@
 				B87BDACA1A8BDB2E00A2A1BB /* MenuItem.m in Sources */,
 				B8E3294F1A83330100327AE0 /* TweetsViewController.m in Sources */,
 				B884522F1A907EB800CDDDF6 /* ImageHeaderViewController.m in Sources */,
+				B8C291A41A9283BB000F2143 /* UserTaglineViewController.m in Sources */,
 				B8D786361A84987E00787EFE /* TweetDetailViewController.m in Sources */,
 				B8E329431A81E2A600327AE0 /* TwitterClient.m in Sources */,
 				B8B441BC1A81C03300D8969F /* main.m in Sources */,
