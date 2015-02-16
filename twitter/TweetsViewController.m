@@ -9,12 +9,13 @@
 #import "TweetsViewController.h"
 #import "TweetDetailViewController.h"
 #import "ComposeViewController.h"
-//#import "UserDetailViewController.h"
-#import "UserProfileViewController.h"
+#import "TextHeaderViewController.h"
+#import "ImageHeaderViewController.h"
 #import "TwitterClient.h"
 #import "User.h"
 #import "Tweet.h"
 #import "TweetCell.h"
+#import "UserCell.h"
 
 static NSInteger const ResultCount = 20;
 NSInteger const ViewHome = 0;
@@ -23,7 +24,6 @@ NSInteger const ViewMentions = 2;
 
 @interface TweetsViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, TweetCellDelegate, TweetDetailViewControllerDelegate>
 @property (nonatomic, strong) NSArray *tweets;
-@property (weak, nonatomic) IBOutlet UILabel *noTweetsLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) TweetCell *prototypeCell;
@@ -35,6 +35,7 @@ NSInteger const ViewMentions = 2;
 
 @implementation TweetsViewController
 NSString * const TweetCellNibName = @"TweetCell";
+NSString * const UserCellNibName = @"UserCell";
 - (TweetCell *)prototypeCell {
     if (!_prototypeCell) {
         _prototypeCell = [self.tableView dequeueReusableCellWithIdentifier:TweetCellNibName];
@@ -55,9 +56,6 @@ NSString * const TweetCellNibName = @"TweetCell";
     }
     
     self.title = @"Home";
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLeftButton)];
-    leftButton.tintColor = [UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = leftButton;
 
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStylePlain target:self action:@selector(onRightButton)];
     rightButton.tintColor = [UIColor whiteColor];
@@ -66,6 +64,7 @@ NSString * const TweetCellNibName = @"TweetCell";
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.tableView registerNib:[UINib nibWithNibName:TweetCellNibName bundle:nil] forCellReuseIdentifier:TweetCellNibName];
+    [self.tableView registerNib:[UINib nibWithNibName:UserCellNibName bundle:nil] forCellReuseIdentifier:UserCellNibName];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     if (self.currentView == ViewHome) {
@@ -87,12 +86,16 @@ NSString * const TweetCellNibName = @"TweetCell";
 - (void) viewWillAppear:(BOOL)animated {
     if (self.isInsertingNewPost) {
         self.isInsertingNewPost = NO;
+        if (self.currentView == ViewHome) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [UIView animateWithDuration:1 animations:^{
             [self.tableView beginUpdates];
             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
             [self.tableView endUpdates];
         }];
+        } else if (self.currentView == ViewUser) {
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+        }
     }
 }
 
@@ -102,11 +105,82 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 #pragma mark - TableView methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    switch (self.currentView) {
+        case ViewUser:
+        case ViewMentions:
+            return 2;
+        case ViewHome:
+        default:
+            return 1;
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if ((self.currentView == ViewUser || self.currentView == ViewMentions) &&
+        section == 0) {
+        return 1;
+    }
     return self.tweets.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (self.currentView == ViewUser || self.currentView == ViewMentions) {
+        switch (section) {
+            case 0:
+            {
+                return 100;
+            }
+            case 1:
+            {
+                return 48;
+            }
+            default:
+            {
+                return 0;
+            }
+        }
+    }
+    return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (self.currentView == ViewUser || self.currentView == ViewMentions) {
+        if (section == 0) {
+            ImageHeaderViewController *vc = [[ImageHeaderViewController alloc] init];
+            vc.view.frame = [self.tableView headerViewForSection:section].bounds;
+            vc.imageUrl = self.user.backgroundImageUrl;
+            [vc willMoveToParentViewController:self];
+            [vc didMoveToParentViewController:self];
+            return vc.view;
+        } else if (section == 1) {
+            TextHeaderViewController *vc = [[TextHeaderViewController alloc] init];
+            vc.view.frame = [self.tableView headerViewForSection:section].bounds;
+            [vc willMoveToParentViewController:self];
+            [vc didMoveToParentViewController:self];
+            if (self.currentView == ViewUser) {
+                vc.textForHeader = [NSString stringWithFormat:@"%ld TWEETS", (long)self.user.statusCount];
+            } else {
+                vc.textForHeader = @"MENTIONS";
+            }
+            return vc.view;
+            
+        }
+    }
+    return nil;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ((self.currentView == ViewUser || self.currentView == ViewMentions)
+        && indexPath.section == 0) {
+        UserCell *cell = [self.tableView dequeueReusableCellWithIdentifier:UserCellNibName];
+        cell.user = self.user;
+//        CGAffineTransform transform = CGAffineTransformMakeScale(1.5, 1.5);
+//        transform = CGAffineTransformTranslate(transform, 16, -16);
+//        cell.profileImage.transform = transform;
+        return cell;
+        
+    }
     if (indexPath.row == self.tweets.count-1 && self.tweets.count >= ResultCount) {
         self.isPaginating = YES;
         [self fetchTweets];
@@ -118,6 +192,10 @@ NSString * const TweetCellNibName = @"TweetCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ((self.currentView == ViewUser || self.currentView == ViewMentions)
+        && indexPath.section == 0) {
+        return 172.5;
+    }
     [self configureCell:self.prototypeCell forRowAtIndexPath:indexPath];
     [self.prototypeCell layoutIfNeeded];
     CGSize size = [self.prototypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
@@ -145,7 +223,7 @@ NSString * const TweetCellNibName = @"TweetCell";
 
 #pragma mark - TweetCellDelegate
 - (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonID {
-    NSLog(@"In TweetsViewController didPressButton %ld", buttonID  );
+    NSLog(@"In TweetsViewController didPressButton %ld", (long)buttonID  );
     switch(buttonID)
     {
         case ButtonIDUserProfile:
@@ -199,10 +277,6 @@ NSString * const TweetCellNibName = @"TweetCell";
 
 
 #pragma mark - Private methods
-- (void)onLeftButton {
-    [User logout];
-}
-
 - (void)onRightButton {
     ComposeViewController *vc = [[ComposeViewController alloc] init];
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
@@ -254,13 +328,6 @@ NSString * const TweetCellNibName = @"TweetCell";
         }
         if (tweets.count < ResultCount) {
             self.tableView.tableFooterView.hidden = YES;
-        }
-        if (tweets.count > 0) {
-            self.noTweetsLabel.hidden = YES;
-            self.tableView.hidden = NO;
-        } else {
-            self.noTweetsLabel.hidden = NO;
-            self.tableView.hidden = YES;
         }
         [self.tableView reloadData];
         

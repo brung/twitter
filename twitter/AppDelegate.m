@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginViewController.h"
+#import "AccountsViewController.h"
 #import "SideNavViewController.h"
 #import "TweetsViewController.h"
 #import "TwitterClient.h"
@@ -25,23 +25,32 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
-    
     User *user = [User currentUser];
     if (user != nil) {
-    self.window.rootViewController = [[SideNavViewController alloc] init];
+        self.window.rootViewController = [[SideNavViewController alloc] init];
     } else {
         NSLog(@"Not logged in");
-        self.window.rootViewController = [[LoginViewController alloc] init];
+        [self userIsLogout];
     }
-    
     
     [self.window makeKeyAndVisible];
     return YES;
 }
 
-- (void)userDidLogout {
-    self.window.rootViewController = [[LoginViewController alloc] init];
+- (void)userIsLogout {
+    AccountsViewController *vc = [[AccountsViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    UINavigationBar *navbar = nvc.navigationBar;
+    [navbar setBarTintColor:[UIColor colorWithRed:(85/255.0) green:(172/255.0) blue:(238/255.0) alpha:1]];
+    navbar.tintColor = [UIColor whiteColor];
+    [navbar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                    [UIColor whiteColor],
+                                    NSForegroundColorAttributeName,
+                                    [UIColor whiteColor],
+                                    NSForegroundColorAttributeName,
+                                    nil]];
+    
+    self.window.rootViewController = nvc;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

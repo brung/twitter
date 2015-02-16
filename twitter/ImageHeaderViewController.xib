@@ -4,9 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetsViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageHeaderViewController">
             <connections>
-                <outlet property="tableView" destination="Oyf-Zp-53B" id="xeh-lK-udD"/>
+                <outlet property="imageHeaderView" destination="DBp-kb-9k5" id="R3t-cW-ztz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,19 +15,17 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Oyf-Zp-53B">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DBp-kb-9k5">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Oyf-Zp-53B" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="DnR-yh-Lr2"/>
-                <constraint firstAttribute="trailing" secondItem="Oyf-Zp-53B" secondAttribute="trailing" id="Zhi-ra-1Sb"/>
-                <constraint firstAttribute="bottom" secondItem="Oyf-Zp-53B" secondAttribute="bottom" id="g9C-0w-sFz"/>
-                <constraint firstItem="Oyf-Zp-53B" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oby-XU-kKe"/>
+                <constraint firstAttribute="bottom" secondItem="DBp-kb-9k5" secondAttribute="bottom" id="VdF-2W-EZu"/>
+                <constraint firstItem="DBp-kb-9k5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="des-k5-eeI"/>
+                <constraint firstItem="DBp-kb-9k5" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="eRz-dA-MKq"/>
+                <constraint firstAttribute="trailing" secondItem="DBp-kb-9k5" secondAttribute="trailing" id="ssk-kX-yNe"/>
             </constraints>
-            <point key="canvasLocation" x="383" y="287"/>
         </view>
     </objects>
 </document>

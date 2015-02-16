@@ -1,5 +1,5 @@
 //
-//  UserProfileViewController.h
+//  UserCell.h
 //  twitter
 //
 //  Created by Bruce Ng on 2/14/15.
@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
-
-@interface UserProfileViewController : UIViewController
+@interface UserCell : UITableViewCell
 @property (nonatomic, strong) User *user;
-@property (nonatomic) NSInteger currentView;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
+
 
 @end

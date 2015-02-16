@@ -37,7 +37,7 @@
         count = count / 1000.0;
         return [NSString stringWithFormat:@"%0.1fK", count];
     }
-    return [NSString stringWithFormat:@"%ld", number];
+    return [NSString stringWithFormat:@"%ld", (long)number];
 }
 
 - (void)didReceiveMemoryWarning {

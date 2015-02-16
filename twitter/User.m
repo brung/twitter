@@ -10,7 +10,6 @@
 #import "TwitterClient.h"
 
 NSString * const UserDidLoginNotification = @"UserDidLoginNotification";
-NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
 
 @interface User()
 
@@ -22,6 +21,7 @@ NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
 
 static User *_currentUser = nil;
 NSString * const kCurrentUserKey = @"kCurrentUserKey";
+NSString * const kAllAccountsKey = @"kAllAccounts";
 
 + (User *)currentUser {
     if (_currentUser == nil) {
@@ -47,10 +47,69 @@ NSString * const kCurrentUserKey = @"kCurrentUserKey";
 }
 
 + (void)logout {
+    [User removeUser:[User currentUser]];
     [User setCurrentUser:nil];
     [[TwitterClient sharedInstance].requestSerializer removeAccessToken];
+}
+
++ (NSArray *)getAllUsers {
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kAllAccountsKey];
+    if (data != nil) {
+        NSArray *array =[NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+        NSMutableArray *users = [NSMutableArray array];
+        for (NSDictionary *dict in array) {
+            [users addObject:[[User alloc] initWithDictionary:dict]];
+        }
+        return users;
+    }
+    return [NSArray array];
+}
+
++ (NSArray *)getAllUsersAsDictionaries {
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kAllAccountsKey];
+    if (data != nil) {
+        NSArray *array =[NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+        return array;
+    }
+    return [NSArray array];
+}
+
+- (void)saveNewUser {
+    NSMutableArray *array = [NSMutableArray arrayWithArray:[User getAllUsersAsDictionaries]];
+    BOOL userAlreadyExists = NO;
+    for (NSUInteger i=0; i < array.count; i++) {
+        NSDictionary *userDict = array[i];
+        if ([self.screename isEqualToString:userDict[@"screen_name"]]) {
+            userAlreadyExists = YES;
+            return;
+        }
+    }
+    [array addObject:self.dictionary];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:array options:0 error:NULL];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAllAccountsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSArray *)removeUser:(User *)user {
+    NSMutableArray *array = [NSMutableArray arrayWithArray:[User getAllUsersAsDictionaries]];
+    NSMutableArray *users = [NSMutableArray array];
+    for (NSUInteger i=0; i < array.count; i++) {
+        NSDictionary *userDict = array[i];
+        if ([user.screename isEqualToString:userDict[@"screen_name"]]) {
+            [array removeObjectAtIndex:i];
+        } else {
+            [users addObject:[[User alloc] initWithDictionary:userDict]];
+        }
+    }
+    NSData *data = [NSJSONSerialization dataWithJSONObject:array options:0 error:NULL];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAllAccountsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLogoutNotification object:nil];
+    if (user.screename == [User currentUser].screename) {
+        [User logout];
+    }
+    
+    return users;
 }
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {

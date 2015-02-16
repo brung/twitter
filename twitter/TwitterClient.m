@@ -57,6 +57,7 @@ NSString * const UserPostedNewTweet = @"UserPostedNewTweet";
         [self GET:@"1.1/account/verify_credentials.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             User *user = [[User alloc] initWithDictionary:responseObject];
             [User setCurrentUser:user];
+            [user saveNewUser];
             NSLog(@"current user: %@", user.name);
             self.loginCompletion(user, nil);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AccountsViewController">
+            <connections>
+                <outlet property="tableView" destination="H3S-LE-yC7" id="QvT-2T-3EU"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ulT-mU-LPQ">
+                    <rect key="frame" x="64" y="544" width="472" height="48"/>
+                    <color key="backgroundColor" red="0.37641132900000002" green="0.69211898819999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="FOJ-wF-PVa"/>
+                    </constraints>
+                    <state key="normal" title="Add Account">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onAddAccountButtonTap:" destination="-1" eventType="touchUpInside" id="e9F-oO-5px"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="748" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="H3S-LE-yC7">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="H3S-LE-yC7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="B0W-9S-4M2"/>
+                <constraint firstAttribute="trailing" secondItem="H3S-LE-yC7" secondAttribute="trailing" id="YgR-FH-9cd"/>
+                <constraint firstItem="ulT-mU-LPQ" firstAttribute="top" secondItem="H3S-LE-yC7" secondAttribute="bottom" constant="8" id="iBm-Pi-Nzj"/>
+                <constraint firstAttribute="trailing" secondItem="ulT-mU-LPQ" secondAttribute="trailing" constant="64" id="k20-uE-bba"/>
+                <constraint firstAttribute="bottom" secondItem="ulT-mU-LPQ" secondAttribute="bottom" constant="8" id="oJS-4i-umP"/>
+                <constraint firstItem="H3S-LE-yC7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="rZK-vi-d4z"/>
+                <constraint firstItem="ulT-mU-LPQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="64" id="xyZ-ZD-oCV"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

@@ -57,7 +57,7 @@
 #pragma mark - UITextView Delegate
 - (void)textViewDidChange:(UITextView *)textView {
     NSInteger count = 140 - [self.tweetText.text length];
-    self.textCounter.title = [NSString stringWithFormat:@"%ld", count];
+    self.textCounter.title = [NSString stringWithFormat:@"%ld", (long)count];
 }
 
 

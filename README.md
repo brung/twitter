@@ -1,7 +1,7 @@
 ## Twitter 
 Week 2 of the twitter app.
 
-Time spent: `14`
+Time spent: `21`
 
 ### Feaures
 
@@ -15,7 +15,7 @@ Time spent: `14`
 
 - [x] Contains the user header view
 - [x] Contains a section with the users basic stats: # tweets, # following, # followers
-- [ ] Optional: Implement the paging view for the user description.
+- [] Optional: Implement the paging view for the user description.
 - [ ] Optional: As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
 - [ ] Optional: Pulling down the profile page should blur and resize the header image.
 
@@ -24,10 +24,10 @@ Time spent: `14`
 - [x] Tapping on a user image should bring up that user's profile page
 
 #### Optional: Account switching
-- [ ] Long press on tab bar to bring up Account view with animation
+- [x] Long press on tab bar to bring up Account view with animation
 - [ ] Tap account to switch to
-- [ ] Include a plus button to Add an Account
-- [ ] Swipe to delete an account
+- [x] Include a plus button to Add an Account
+- [x] Swipe to delete an account
 
 ### Walkthrough
 

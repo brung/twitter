@@ -94,6 +94,7 @@
             </variation>
             <connections>
                 <outletCollection property="gestureRecognizers" destination="UdJ-yk-i4F" appends="YES" id="PMq-HR-dhN"/>
+                <outletCollection property="gestureRecognizers" destination="zo2-1p-Q8t" appends="YES" id="bd4-D3-ogY"/>
             </connections>
             <point key="canvasLocation" x="137" y="160"/>
         </view>
@@ -102,5 +103,10 @@
                 <action selector="onViewSwipe:" destination="-1" id="FpS-K2-Vmf"/>
             </connections>
         </panGestureRecognizer>
+        <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="zo2-1p-Q8t">
+            <connections>
+                <action selector="onLongPress:" destination="-1" id="QFQ-1S-NqR"/>
+            </connections>
+        </pongPressGestureRecognizer>
     </objects>
 </document>
