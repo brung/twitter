@@ -26,7 +26,7 @@ Time spent: `24`
 #### Optional: Account switching
 - [x] Long press on tab bar to bring up Account view with animation
 - [ ] Tap account to switch to
-- [~] Include a plus button to Add an Account
+- [ ] Include a plus button to Add an Account
 - [x] Swipe to delete an account
 
 ### Walkthrough
