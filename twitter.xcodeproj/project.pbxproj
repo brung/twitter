@@ -34,8 +34,6 @@
 		B8B441D61A81C03300D8969F /* twitterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B441D51A81C03300D8969F /* twitterTests.m */; };
 		B8D786361A84987E00787EFE /* TweetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D786341A84987E00787EFE /* TweetDetailViewController.m */; };
 		B8D786371A84987E00787EFE /* TweetDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8D786351A84987E00787EFE /* TweetDetailViewController.xib */; };
-		B8E3293F1A81E04E00327AE0 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8E3293D1A81E04E00327AE0 /* LoginViewController.m */; };
-		B8E329401A81E04E00327AE0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E3293E1A81E04E00327AE0 /* LoginViewController.xib */; };
 		B8E329431A81E2A600327AE0 /* TwitterClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B8E329421A81E2A600327AE0 /* TwitterClient.m */; };
 		B8E329481A83292D00327AE0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B8E329471A83292D00327AE0 /* User.m */; };
 		B8E3294B1A83293900327AE0 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = B8E3294A1A83293900327AE0 /* Tweet.m */; };
@@ -100,9 +98,6 @@
 		B8D786331A84987E00787EFE /* TweetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailViewController.h; sourceTree = "<group>"; };
 		B8D786341A84987E00787EFE /* TweetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailViewController.m; sourceTree = "<group>"; };
 		B8D786351A84987E00787EFE /* TweetDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetDetailViewController.xib; sourceTree = "<group>"; };
-		B8E3293C1A81E04E00327AE0 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		B8E3293D1A81E04E00327AE0 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		B8E3293E1A81E04E00327AE0 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		B8E329411A81E2A600327AE0 /* TwitterClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterClient.h; sourceTree = "<group>"; };
 		B8E329421A81E2A600327AE0 /* TwitterClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterClient.m; sourceTree = "<group>"; };
 		B8E329461A83292D00327AE0 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -220,9 +215,6 @@
 		B8B441DF1A81C06D00D8969F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B8E3293C1A81E04E00327AE0 /* LoginViewController.h */,
-				B8E3293D1A81E04E00327AE0 /* LoginViewController.m */,
-				B8E3293E1A81E04E00327AE0 /* LoginViewController.xib */,
 				B8E3294C1A83330100327AE0 /* TweetsViewController.h */,
 				B8E3294D1A83330100327AE0 /* TweetsViewController.m */,
 				B8E3294E1A83330100327AE0 /* TweetsViewController.xib */,
@@ -365,7 +357,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8E329401A81E04E00327AE0 /* LoginViewController.xib in Resources */,
 				B884523C1A91470C00CDDDF6 /* AccountsViewController.xib in Resources */,
 				B8D786371A84987E00787EFE /* TweetDetailViewController.xib in Resources */,
 				B8E329591A8488AD00327AE0 /* TweetCell.xib in Resources */,
@@ -430,7 +421,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8E3293F1A81E04E00327AE0 /* LoginViewController.m in Sources */,
 				B8B441BF1A81C03300D8969F /* AppDelegate.m in Sources */,
 				B87BDAC11A8BD77400A2A1BB /* SideNavViewController.m in Sources */,
 				B8E329481A83292D00327AE0 /* User.m in Sources */,

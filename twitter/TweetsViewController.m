@@ -30,6 +30,7 @@ NSInteger const ViewMentions = 2;
 @property (nonatomic) BOOL isUpdating;
 @property (nonatomic) BOOL isPaginating;
 @property (nonatomic) BOOL isInsertingNewPost;
+@property (nonatomic) CGFloat userHeaderHeight;
 
 @end
 
@@ -46,6 +47,7 @@ NSString * const UserCellNibName = @"UserCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.userHeaderHeight = 100;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPostNewTweetNotification:) name:UserPostedNewTweet object:nil];
     
     self.isUpdating = NO;
@@ -129,7 +131,7 @@ NSString * const UserCellNibName = @"UserCell";
         switch (section) {
             case 0:
             {
-                return 100;
+                return self.userHeaderHeight;
             }
             case 1:
             {
@@ -142,6 +144,19 @@ NSString * const UserCellNibName = @"UserCell";
         }
     }
     return 0;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.currentView == ViewUser || self.currentView == ViewMentions) {
+        NSLog(@"scroll blah %f", self.tableView.contentOffset.y);
+    if (self.tableView.contentOffset.y < 0) {
+        float offsetY = self.tableView.contentOffset.y;
+        CGRect tblFrame = self.tableView.tableHeaderView.frame;
+        self.tableView.tableHeaderView.frame = CGRectMake(tblFrame.origin.x, offsetY, tblFrame.size.width, self.userHeaderHeight-offsetY);
+        self.userHeaderHeight = self.userHeaderHeight-offsetY;
+        [self.tableView layoutIfNeeded];
+    }
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

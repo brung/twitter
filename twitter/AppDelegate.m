@@ -24,7 +24,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userIsLogout) name:UserSwitchingAccounts object:nil];
+
     User *user = [User currentUser];
     if (user != nil) {
         self.window.rootViewController = [[SideNavViewController alloc] init];
